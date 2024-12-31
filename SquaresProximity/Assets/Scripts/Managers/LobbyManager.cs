@@ -94,14 +94,14 @@ namespace Managers
             UpdateStartButtonState();
         }
 
-        private void OnStartButtonPressed()
+        public void OnStartButtonPressed()
         {
             if(PhotonNetwork.IsMasterClient)
             {
                 Debug.Log("Starting the game...");
                 int totalPlayers = PhotonNetwork.PlayerList.Length;
                 Debug.Log("Total Number Of Players Joined : " + totalPlayers);
-                //TODO Create an event and invoke it to send the totalPlayers and GameManager should listen to this and set the numberOfPlayers to this value if _onlineMode is true or something like that
+                EventsManager.Invoke(Event.GameStartedMultiplayer , totalPlayers);
             }
             else
             {

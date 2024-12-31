@@ -87,16 +87,16 @@ namespace Managers
 
         private void Awake()
         {
-            // Initialize _onlineMode safely
             _onlineMode = ServiceLocator.Get<OnlineMode>();
-            if (_onlineMode == null)
+            
+            if(_onlineMode == null)
             {
                 Debug.LogWarning("OnlineMode not found! Defaulting to offline mode.");
             }
 
-            _randomSpritesIndex = Random.Range(0, availableSprites.Length);
+            _randomSpritesIndex = Random.Range(0 , availableSprites.Length);
 
-            if (isTestingMode)
+            if(isTestingMode)
             {
                 GridInfo.Cols = 12;
                 GridInfo.Rows = 1;
@@ -109,9 +109,8 @@ namespace Managers
 
             InitializeGridData();
             ToggleEventSubscription(true);
-
-            // Decide whether to generate grid based on mode
-            if (_onlineMode != null && _onlineMode.PlayerIsOnline && PhotonNetwork.IsMasterClient)
+            
+            if(_onlineMode != null && _onlineMode.PlayerIsOnline && PhotonNetwork.IsMasterClient)
             {
                 GenerateAndBroadcastGrid();
             }
@@ -133,14 +132,14 @@ namespace Managers
         [PunRPC]
         private void RPC_SyncGrid(Vector2Int[] generatedCells)
         {
-            foreach (var cellIndex in generatedCells)
+            foreach(var cellIndex in generatedCells)
             {
-                Vector2 cellWorldPos = CellToWorld(cellIndex.x, cellIndex.y);
-                GameObject cell = Instantiate(cellPrefab, cellWorldPos, Quaternion.identity, transform);
+                Vector2 cellWorldPos = CellToWorld(cellIndex.x , cellIndex.y);
+                GameObject cell = Instantiate(cellPrefab , cellWorldPos , Quaternion.identity , transform);
                 SpriteRenderer cellRenderer = cell.GetComponentInChildren<SpriteRenderer>();
                 cellRenderer.sprite = availableSprites[_randomSpritesIndex];
-                CellSpriteRenderersData.SetValue(cellIndex.x, cellIndex.y, cellRenderer);
-                CoinOnTheCellData.SetValue(cellIndex.x, cellIndex.y, cell);
+                CellSpriteRenderersData.SetValue(cellIndex.x , cellIndex.y , cellRenderer);
+                CoinOnTheCellData.SetValue(cellIndex.x , cellIndex.y , cell);
             }
         }
 
@@ -158,56 +157,56 @@ namespace Managers
         private void GenerateAndBroadcastGrid()
         {
             List<Vector2Int> generatedCells = GenerateGridData();
-            photonView.RPC(nameof(RPC_SyncGrid), RpcTarget.AllBuffered, generatedCells.ToArray());
+            photonView.RPC(nameof(RPC_SyncGrid) , RpcTarget.AllBuffered , generatedCells.ToArray());
         }
 
         private void GenerateGrid()
         {
             List<Vector2Int> cellIndices = new List<Vector2Int>();
 
-            for (int col = 0; col < GridInfo.Cols; col++)
+            for(int col = 0; col < GridInfo.Cols; col++)
             {
-                for (int row = 0; row < GridInfo.Rows; row++)
+                for(int row = 0; row < GridInfo.Rows; row++)
                 {
-                    cellIndices.Add(new Vector2Int(col, row));
+                    cellIndices.Add(new Vector2Int(col , row));
                 }
             }
 
-            if (_shouldGenerateEmptyCellsBool)
+            if(_shouldGenerateEmptyCellsBool)
             {
                 TotalCells -= _holeCellsCount;
 
-                if (_holeCellsCount > cellIndices.Count)
+                if(_holeCellsCount > cellIndices.Count)
                 {
                     _holeCellsCount = cellIndices.Count;
                 }
 
-                for (int i = 0; i < _holeCellsCount; i++)
+                for(int i = 0; i < _holeCellsCount; i++)
                 {
-                    int randomIndex = Random.Range(0, cellIndices.Count);
+                    int randomIndex = Random.Range(0 , cellIndices.Count);
                     Vector2Int cellIndex = cellIndices[randomIndex];
                     cellIndices.RemoveAt(randomIndex);
 
-                    IsCellBlockedData.SetValue(cellIndex.x, cellIndex.y, true);
+                    IsCellBlockedData.SetValue(cellIndex.x , cellIndex.y , true);
 
-                    Vector2 cellWorldPos = CellToWorld(cellIndex.x, cellIndex.y);
-                    GameObject cellObject = Instantiate(cellPrefab, cellWorldPos, Quaternion.identity, transform);
+                    Vector2 cellWorldPos = CellToWorld(cellIndex.x , cellIndex.y);
+                    GameObject cellObject = Instantiate(cellPrefab , cellWorldPos , Quaternion.identity , transform);
                     SpriteRenderer cellRenderer = cellObject.GetComponentInChildren<SpriteRenderer>();
                     cellRenderer.sprite = availableSprites[_randomSpritesIndex];
-                    cellRenderer.material.SetFloat(HoleSize, holeSize);
-                    _cellPrefabData.SetValue(cellIndex.x, cellIndex.y, cellObject);
-                    CellSpriteRenderersData.SetValue(cellIndex.x, cellIndex.y, cellRenderer);
+                    cellRenderer.material.SetFloat(HoleSize , holeSize);
+                    _cellPrefabData.SetValue(cellIndex.x , cellIndex.y , cellObject);
+                    CellSpriteRenderersData.SetValue(cellIndex.x , cellIndex.y , cellRenderer);
                 }
             }
 
-            foreach (Vector2Int cellIndex in cellIndices)
+            foreach(Vector2Int cellIndex in cellIndices)
             {
-                Vector2 cellWorldPos = CellToWorld(cellIndex.x, cellIndex.y);
-                GameObject cell = Instantiate(cellPrefab, cellWorldPos, Quaternion.identity, transform);
+                Vector2 cellWorldPos = CellToWorld(cellIndex.x , cellIndex.y);
+                GameObject cell = Instantiate(cellPrefab , cellWorldPos , Quaternion.identity , transform);
                 SpriteRenderer cellRenderer = cell.GetComponentInChildren<SpriteRenderer>();
                 cellRenderer.sprite = availableSprites[_randomSpritesIndex];
-                CellSpriteRenderersData.SetValue(cellIndex.x, cellIndex.y, cellRenderer);
-                CoinOnTheCellData.SetValue(cellIndex.x, cellIndex.y, cell);
+                CellSpriteRenderersData.SetValue(cellIndex.x , cellIndex.y , cellRenderer);
+                CoinOnTheCellData.SetValue(cellIndex.x , cellIndex.y , cell);
             }
         }
 
@@ -290,8 +289,7 @@ namespace Managers
 
         private void OnGameStarted()
         {
-            // Add null check for _onlineMode
-            if (_onlineMode != null && _onlineMode.PlayerIsOnline && PhotonNetwork.IsMasterClient)
+            if(_onlineMode != null && _onlineMode.PlayerIsOnline && PhotonNetwork.IsMasterClient)
             {
                 GenerateAndBroadcastGrid();
             }
@@ -308,15 +306,15 @@ namespace Managers
 
         private void ToggleEventSubscription(bool shouldSubscribe)
         {
-            if (shouldSubscribe)
+            if(shouldSubscribe)
             {
-                EventsManager.SubscribeToEvent(Event.GameStarted, new Action(OnGameStarted));
-                EventsManager.SubscribeToEvent(Event.HolesToggled, new Action(OnHolesToggled));
+                EventsManager.SubscribeToEvent(Event.GameStarted , new Action(OnGameStarted));
+                EventsManager.SubscribeToEvent(Event.HolesToggled , new Action(OnHolesToggled));
             }
             else
             {
-                EventsManager.UnsubscribeFromEvent(Event.GameStarted, new Action(OnGameStarted));
-                EventsManager.UnsubscribeFromEvent(Event.HolesToggled, new Action(OnHolesToggled));
+                EventsManager.UnsubscribeFromEvent(Event.GameStarted , new Action(OnGameStarted));
+                EventsManager.UnsubscribeFromEvent(Event.HolesToggled , new Action(OnHolesToggled));
             }
         }
 

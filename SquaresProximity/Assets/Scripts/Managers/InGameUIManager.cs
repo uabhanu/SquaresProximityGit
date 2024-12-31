@@ -737,6 +737,70 @@ namespace Managers
                 gameTitleTMPTexts[i].enabled = false;
             }
         }
+        
+        public void OnGameStartedMultiplayer(int numberOfPlayers)
+        {
+            _numberOfPlayers = numberOfPlayers;
+
+            if(_numberOfPlayers == 2)
+            {
+                #if UNITY_ANDROID || UNITY_IOS
+                    inGameUIPlayerNamesDisplayPanelObj.GetComponent<HorizontalLayoutGroup>().spacing = 500;          
+                #endif
+                
+                #if UNITY_STANDALONE || UNITY_WEBGL
+                    inGameUIPlayerNamesDisplayPanelObj.GetComponent<HorizontalLayoutGroup>().spacing = 650;          
+                #endif
+            }
+            
+            else if(_numberOfPlayers == 3)
+            {
+                #if UNITY_ANDROID || UNITY_IOS
+                    inGameUIPlayerNamesDisplayPanelObj.GetComponent<HorizontalLayoutGroup>().spacing = 150;  
+                #endif
+                
+                #if UNITY_STANDALONE || UNITY_WEBGL
+                    inGameUIPlayerNamesDisplayPanelObj.GetComponent<HorizontalLayoutGroup>().spacing = 250;          
+                #endif
+            }
+            
+            else if(_numberOfPlayers == 4)
+            {
+                #if UNITY_ANDROID || UNITY_IOS
+                    inGameUIPlayerNamesDisplayPanelObj.GetComponent<HorizontalLayoutGroup>().spacing = 25;   
+                #endif
+                
+                #if UNITY_STANDALONE || UNITY_WEBGL
+                    inGameUIPlayerNamesDisplayPanelObj.GetComponent<HorizontalLayoutGroup>().spacing = 125;          
+                #endif
+            }
+
+            // for(int i = 0; i < _numberOfPlayers; i++)
+            // {
+            //     inGameUIPlayerNamesDisplayPanelObjs[i].SetActive(true);
+            //     _playerNamesArray[i] = playerNameTMPInputFields[i].text;
+            //     UpdateInGamePlayerNames(i);
+            // }
+        
+            inGameUIPanelsObj.SetActive(true);
+            lobbyPanelObj.SetActive(false);
+            playerInputPanelObj.SetActive(false);
+            EventsManager.Invoke(Event.GameStarted);
+            
+            for(int i = 0; i < gameTitleTMPTexts.Length; i++)
+            {
+                gameTitleTMPTexts[i].enabled = false;
+            }
+            
+            string[] nameKeys = new string[_numberOfPlayers];
+            
+            for(int i = 0; i < _numberOfPlayers; i++)
+            {
+                nameKeys[i] = "Player" + i + "Name";
+            }
+            
+            PlayerPrefsManager.SaveData(_playerNamesArray , nameKeys);
+        }
 
         private void OnGameTied()
         {
@@ -841,6 +905,7 @@ namespace Managers
                 EventsManager.SubscribeToEvent(Event.GameOver , new Action(OnGameOver));
                 EventsManager.SubscribeToEvent(Event.GamePaused , new Action(OnGamePaused));
                 EventsManager.SubscribeToEvent(Event.GameResumed , new Action(OnGameResumed));
+                EventsManager.SubscribeToEvent(Event.GameStartedMultiplayer , (Action<int>)OnGameStartedMultiplayer);
                 EventsManager.SubscribeToEvent(Event.GameTied , new Action(OnGameTied));
                 EventsManager.SubscribeToEvent(Event.KeyboardTabPressed , new Action(OnKeyboardTabPressed));
                 EventsManager.SubscribeToEvent(Event.LobbyJoinButtonPressed , new Action(OnLobbyJoinButtonPressed));
@@ -855,6 +920,7 @@ namespace Managers
                 EventsManager.UnsubscribeFromEvent(Event.GameOver , new Action(OnGameOver));
                 EventsManager.UnsubscribeFromEvent(Event.GamePaused , new Action(OnGamePaused));
                 EventsManager.UnsubscribeFromEvent(Event.GameResumed , new Action(OnGameResumed));
+                EventsManager.UnsubscribeFromEvent(Event.GameStartedMultiplayer , (Action<int>)OnGameStartedMultiplayer);
                 EventsManager.UnsubscribeFromEvent(Event.GameTied , new Action(OnGameTied));
                 EventsManager.UnsubscribeFromEvent(Event.KeyboardTabPressed , new Action(OnKeyboardTabPressed));
                 EventsManager.UnsubscribeFromEvent(Event.LobbyJoinButtonPressed , new Action(OnLobbyJoinButtonPressed));

@@ -358,6 +358,65 @@ namespace Managers
             IPlayerTurnsManager.StartPlayerTurn();
         }
         
+        private void OnGameStartedMultiplayer(int numberOfPlayers)
+        {
+            _numberOfPlayers = numberOfPlayers;
+            
+            _isGameStarted = true;
+
+            _gridManager = FindAnyObjectByType<GridManager>();
+            
+            _iPlayerTurnsManager = new PlayerTurnsManager(this , _gridManager);
+            _iCoinPlacer = new CoinPlacer(this , _gridManager);
+
+            IPlayerTurnsManager.UpdateTrailColor();
+
+            _playersListsCapacity = _gridManager.TotalCells / NumberOfPlayers;
+
+            SelfCoinsCellIndicesList = new List<Vector2Int>();
+            SelfCoinValuesList = new List<int>();
+            LesserCoinsCellIndicesList = new List<Vector2Int>();
+            LesserCoinValuesList = new List<int>();
+            OtherPlayerCoinsCellIndicesList = new List<Vector2Int>();
+            OtherPlayerCoinValuesList = new List<int>();
+            UnblockedCellIndicesList = new List<Vector2Int>();
+            _playerNumbersList = new List<List<int>>();
+            _playersRemainingList = new List<int>();
+
+            for(int i = 0; i < NumberOfPlayers; i++)
+            {
+                PlayersRemainingList.Add(i);
+            }
+
+            for(int i = 0; i < NumberOfPlayers; i++)
+            {
+                List<int> numbers = new List<int>(_playersListsCapacity);
+
+                if(isTestingMode)
+                {
+                    CoinValue = coinValueForTesting;
+                    numbers.Add(CoinValue);
+                }
+                else
+                {
+                    for(int j = 0; j < _playersListsCapacity; j++)
+                    {
+                        int randomValue = Random.Range(1 , 21);
+                        CoinValue = randomValue;
+                        numbers.Add(CoinValue);
+                    }   
+                }
+
+                for(i = 0; i < NumberOfPlayers; i++)
+                {
+                    ShuffleList(numbers);
+                    PlayerNumbersList.Add(new List<int>(numbers));
+                }
+            }
+        
+            IPlayerTurnsManager.StartPlayerTurn();
+        }
+        
         private void OnJoystickDownPressed()
         {
             if(!_isGameStarted) return;
@@ -616,6 +675,7 @@ namespace Managers
                 EventsManager.SubscribeToEvent(Event.GameRestarted , new Action(OnGameRestarted));
                 EventsManager.SubscribeToEvent(Event.GameResumed , new Action(OnGameResumed));
                 EventsManager.SubscribeToEvent(Event.GameStarted , new Action(OnGameStarted));
+                EventsManager.SubscribeToEvent(Event.GameStartedMultiplayer , (Action<int>)OnGameStartedMultiplayer);
                 EventsManager.SubscribeToEvent(Event.JoystickDownPressed , new Action(OnJoystickDownPressed));
                 EventsManager.SubscribeToEvent(Event.JoystickLeftPressed , new Action(OnJoystickLeftPressed));
                 EventsManager.SubscribeToEvent(Event.JoystickRightPressed , new Action(OnJoystickRightPressed));
@@ -635,6 +695,7 @@ namespace Managers
                 EventsManager.UnsubscribeFromEvent(Event.GameRestarted , new Action(OnGameRestarted));
                 EventsManager.UnsubscribeFromEvent(Event.GameResumed , new Action(OnGameResumed));
                 EventsManager.UnsubscribeFromEvent(Event.GameStarted , new Action(OnGameStarted));
+                EventsManager.UnsubscribeFromEvent(Event.GameStartedMultiplayer , (Action<int>)OnGameStartedMultiplayer);
                 EventsManager.UnsubscribeFromEvent(Event.JoystickDownPressed , new Action(OnJoystickDownPressed));
                 EventsManager.UnsubscribeFromEvent(Event.JoystickLeftPressed , new Action(OnJoystickLeftPressed));
                 EventsManager.UnsubscribeFromEvent(Event.JoystickRightPressed , new Action(OnJoystickRightPressed));

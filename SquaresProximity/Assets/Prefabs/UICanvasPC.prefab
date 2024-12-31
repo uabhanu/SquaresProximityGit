@@ -11931,7 +11931,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3771763688728783762}
         m_TargetAssemblyTypeName: Managers.LobbyManager, Assembly-CSharp
-        m_MethodName: OnStartButtonClicked
+        m_MethodName: OnStartButtonPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
