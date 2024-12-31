@@ -825,9 +825,6 @@
     <Reference Include="UnityEditor.TestRunner">
       <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\UnityEditor.TestRunner.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Services.Vivox.Editor">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.Services.Vivox.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.InputSystem.ForUI">
       <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.InputSystem.ForUI.dll</HintPath>
     </Reference>
@@ -923,9 +920,6 @@
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Services.Vivox">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.Services.Vivox.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Services.Core.Analytics">
       <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.Services.Core.Analytics.dll</HintPath>
