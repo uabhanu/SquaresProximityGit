@@ -41,7 +41,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\PackageCache\com.unity.transport\Analyzers\Unity.Transport.Analyzers.dll" />
+    <Analyzer Include="E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\PackageCache\com.unity.transport\Analyzers\Unity.Transport.Analyzers.dll" />
     <Analyzer Include="D:\Unity\Editor\6000.0.24f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="D:\Unity\Editor\6000.0.24f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
     <Analyzer Include="D:\Unity\Editor\6000.0.24f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
@@ -415,34 +415,34 @@
       <HintPath>D:\Unity\Editor\6000.0.24f1\Editor\Data\PlaybackEngines\AndroidPlayer\UnityEditor.Android.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="Google.PackageManagerResolver">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Assets\ExternalDependencyManager\Editor\1.2.182\Google.PackageManagerResolver.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Assets\ExternalDependencyManager\Editor\1.2.182\Google.PackageManagerResolver.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Collections.LowLevel.ILSupport">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\PackageCache\com.unity.collections\Unity.Collections.LowLevel.ILSupport\Unity.Collections.LowLevel.ILSupport.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\PackageCache\com.unity.collections\Unity.Collections.LowLevel.ILSupport\Unity.Collections.LowLevel.ILSupport.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\PackageCache\com.unity.ext.nunit\net40\unity-custom\nunit.framework.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\PackageCache\com.unity.ext.nunit\net40\unity-custom\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="Google.VersionHandlerImpl">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Assets\ExternalDependencyManager\Editor\1.2.182\Google.VersionHandlerImpl.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Assets\ExternalDependencyManager\Editor\1.2.182\Google.VersionHandlerImpl.dll</HintPath>
     </Reference>
     <Reference Include="websocket-sharp">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Assets\Photon\PhotonLibs\WebSocket\websocket-sharp.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Assets\Photon\PhotonLibs\WebSocket\websocket-sharp.dll</HintPath>
     </Reference>
     <Reference Include="Google.VersionHandler">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Assets\ExternalDependencyManager\Editor\Google.VersionHandler.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Assets\ExternalDependencyManager\Editor\Google.VersionHandler.dll</HintPath>
     </Reference>
     <Reference Include="Photon3Unity3D">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Assets\Photon\PhotonLibs\netstandard2.0\Photon3Unity3D.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Assets\Photon\PhotonLibs\netstandard2.0\Photon3Unity3D.dll</HintPath>
     </Reference>
     <Reference Include="Google.JarResolver">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Assets\ExternalDependencyManager\Editor\1.2.182\Google.JarResolver.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Assets\ExternalDependencyManager\Editor\1.2.182\Google.JarResolver.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\PackageCache\com.unity.nuget.newtonsoft-json\Runtime\Newtonsoft.Json.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\PackageCache\com.unity.nuget.newtonsoft-json\Runtime\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\PackageCache\com.unity.nuget.mono-cecil\Mono.Cecil.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\PackageCache\com.unity.nuget.mono-cecil\Mono.Cecil.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Android.Types">
       <HintPath>D:\Unity\Editor\6000.0.24f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Types.dll</HintPath>
@@ -826,157 +826,157 @@
       <HintPath>D:\Unity\Editor\6000.0.24f1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Xml.XPath.XDocument.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TestRunner">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\UnityEngine.TestRunner.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\UnityEngine.TestRunner.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.TestRunner">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\UnityEditor.TestRunner.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\UnityEditor.TestRunner.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Services.Vivox.Editor">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.Services.Vivox.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.InputSystem.ForUI">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.InputSystem.ForUI.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.UI">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Rider.Editor">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.Services.Vivox.Editor.dll</HintPath>
     </Reference>
     <Reference Include="PsdPlugin">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\PsdPlugin.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\PsdPlugin.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Networking.Editor">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.Networking.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.Common.Editor">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.2D.Common.Editor.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.Networking.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Common.Path.Editor">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.2D.Common.Path.Editor.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.2D.Common.Path.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.IK.Editor">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.2D.IK.Editor.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.2D.IK.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.IK.Runtime">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.2D.IK.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.SpriteShape.Runtime">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.2D.SpriteShape.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Multiplayer.PlayMode.Scenarios.Editor">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.Multiplayer.PlayMode.Scenarios.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.2D.IK.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Aseprite.Editor">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.2D.Aseprite.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Mathematics.Editor">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.Mathematics.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.InternalAPIEditorBridge.001">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.InternalAPIEditorBridge.001.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.Animation.Editor">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.2D.Animation.Editor.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.2D.Aseprite.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Services.Authentication.PlayerAccounts">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.Services.Authentication.PlayerAccounts.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Collections">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.Collections.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.PixelPerfect.Editor">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.2D.PixelPerfect.Editor.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.Services.Authentication.PlayerAccounts.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Multiplayer.Playmode">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.Multiplayer.Playmode.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.Multiplayer.Playmode.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Services.Authentication.Editor.Shared">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.Services.Authentication.Editor.Shared.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.LevelPlay">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.LevelPlay.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.Services.Authentication.Editor.Shared.dll</HintPath>
     </Reference>
     <Reference Include="Unity.InternalAPIEngineBridge.001">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.InternalAPIEngineBridge.001.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.InternalAPIEngineBridge.001.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Tilemap.Editor">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.2D.Tilemap.Editor.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.2D.Tilemap.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Aseprite.Common">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.2D.Aseprite.Common.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.2D.Aseprite.Common.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Animation.Runtime">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.2D.Animation.Runtime.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.2D.Animation.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Multiplayer.PlayMode.Configurations.Editor">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.Multiplayer.PlayMode.Configurations.Editor.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.Multiplayer.PlayMode.Configurations.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Collections.Editor">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.Collections.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.Tilemap.Extras.Editor">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.2D.Tilemap.Extras.Editor.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.Collections.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Multiplayer.PlayMode.Editor.Bridge">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.Multiplayer.PlayMode.Editor.Bridge.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.Multiplayer.PlayMode.Editor.Bridge.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Services.Vivox">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.Services.Vivox.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.Services.Vivox.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Services.Core.Analytics">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.Services.Core.Analytics.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.Services.Core.Analytics.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Tilemap.Extras">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.2D.Tilemap.Extras.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.Common.Runtime">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.2D.Common.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Services.Authentication">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.Services.Authentication.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Mathematics">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.Mathematics.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Networking.Transport">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.Networking.Transport.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.SpriteShape.Editor">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.2D.SpriteShape.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Services.Core.Environments">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.Services.Core.Environments.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.2D.Tilemap.Extras.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Sprite.Editor">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Psdimporter.Editor">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.2D.Psdimporter.Editor.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.2D.Psdimporter.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.InputSystem.ForUI">
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.InputSystem.ForUI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.UI">
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Rider.Editor">
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Common.Editor">
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.2D.Common.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Multiplayer.PlayMode.Scenarios.Editor">
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.Multiplayer.PlayMode.Scenarios.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.SpriteShape.Runtime">
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.2D.SpriteShape.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mathematics.Editor">
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.Mathematics.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.InternalAPIEditorBridge.001">
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.InternalAPIEditorBridge.001.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Animation.Editor">
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.2D.Animation.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Collections">
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.PixelPerfect.Editor">
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.2D.PixelPerfect.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.LevelPlay">
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.LevelPlay.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Tilemap.Extras.Editor">
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.2D.Tilemap.Extras.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Common.Runtime">
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.2D.Common.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Services.Authentication">
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.Services.Authentication.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mathematics">
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.Mathematics.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Networking.Transport">
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.Networking.Transport.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.SpriteShape.Editor">
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.2D.SpriteShape.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Services.Core.Environments">
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.Services.Core.Environments.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst.Editor">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.Burst.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Services.Core">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.Services.Core.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.Burst.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.PixelPerfect">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.2D.PixelPerfect.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.2D.PixelPerfect.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Services.Core">
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.Services.Core.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.Burst.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.Burst.dll</HintPath>
     </Reference>
     <Reference Include="Unity.InputSystem">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityRepo\SquaresProximity\Library\ScriptAssemblies\Unity.InputSystem.dll</HintPath>
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.InputSystem.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -995,6 +995,14 @@
     <ProjectReference Include="Google.Play.Games.csproj">
       <Project>{f36e72d6-acd6-23c3-9020-438ec87d550e}</Project>
       <Name>Google.Play.Games</Name>
+    </ProjectReference>
+    <ProjectReference Include="PhotonRealtime.csproj">
+      <Project>{01107622-224d-4d49-1393-3568bf19b536}</Project>
+      <Name>PhotonRealtime</Name>
+    </ProjectReference>
+    <ProjectReference Include="AutoDarkTheme.csproj">
+      <Project>{31095a16-56af-0de2-d3c0-d8d0ac2601bf}</Project>
+      <Name>AutoDarkTheme</Name>
     </ProjectReference>
     <ProjectReference Include="PhotonUnityNetworking.Utilities.PhotonPlayer.Editor.csproj">
       <Project>{f8d311c9-6c5a-12dd-c540-93ff72437dde}</Project>
@@ -1016,21 +1024,13 @@
       <Project>{a0ebb8e8-0f45-6abd-ea5c-ca1f998a536d}</Project>
       <Name>PhotonUnityNetworking.Demos</Name>
     </ProjectReference>
-    <ProjectReference Include="PhotonRealtime.csproj">
-      <Project>{01107622-224d-4d49-1393-3568bf19b536}</Project>
-      <Name>PhotonRealtime</Name>
-    </ProjectReference>
-    <ProjectReference Include="AutoDarkTheme.csproj">
-      <Project>{31095a16-56af-0de2-d3c0-d8d0ac2601bf}</Project>
-      <Name>AutoDarkTheme</Name>
+    <ProjectReference Include="PunDemos.DemoSlotcarEditor.csproj">
+      <Project>{0d91691a-14eb-9307-71df-34481d4ff32a}</Project>
+      <Name>PunDemos.DemoSlotcarEditor</Name>
     </ProjectReference>
     <ProjectReference Include="PhotonChat.csproj">
       <Project>{166a151d-64a5-e28a-d56d-e24952aeb4b8}</Project>
       <Name>PhotonChat</Name>
-    </ProjectReference>
-    <ProjectReference Include="PunDemos.DemoSlotcarEditor.csproj">
-      <Project>{0d91691a-14eb-9307-71df-34481d4ff32a}</Project>
-      <Name>PunDemos.DemoSlotcarEditor</Name>
     </ProjectReference>
     <ProjectReference Include="PunDemos.DemoHubEditor.csproj">
       <Project>{7d2b0f48-29b5-8996-e311-9aeff7b6645a}</Project>
