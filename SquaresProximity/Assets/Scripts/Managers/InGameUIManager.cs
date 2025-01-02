@@ -1,5 +1,7 @@
 namespace Managers
 {
+    using Photon.Pun;
+    using Photon.Realtime;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -34,6 +36,7 @@ namespace Managers
         private string _serverPassword;
         private string[] _playerNamesArray;
         
+        [SerializeField] private Button startButton;
         [SerializeField] private GameObject coinUIObj;
         [SerializeField] private GameObject continueButtonObj;
         [SerializeField] private GameObject gameIntroPanelObj;
@@ -57,7 +60,7 @@ namespace Managers
         [SerializeField] private TMP_InputField lobbyPlayerNameInputField;
         [SerializeField] private TMP_InputField[] playerNameTMPInputFields;
         [SerializeField] private TMP_Text backButtonTMPText;
-        [SerializeField] private TMP_Text playersListTMPText;
+        [SerializeField] private TMP_Text lobbyPlayersListTMPText;
         [SerializeField] private TMP_Text[] gameTitleTMPTexts;
         [SerializeField] private TMP_Text[] totalReceivedTMPTexts;
         [SerializeField] private TMP_Text[] playerTotalWinsLabelsTMPTexts;
@@ -87,6 +90,8 @@ namespace Managers
             pauseMenuPanelObj.SetActive(false);
             playerInputPanelObj.SetActive(false);
             lobbyEnteringPanelObj.SetActive(false);
+            startButton.interactable = false;
+            startButton.gameObject.SetActive(false);
             
             _numberOfPlayersSelectionsBoolArray = new bool[numberOfPlayersSelectionTogglesArray.Length];
             _playersTotalWinsArray = new int[_numberOfPlayers];
@@ -371,6 +376,28 @@ namespace Managers
             PlayerPrefsManager.SaveData(_playerNamesArray , nameKeys);
         }
 
+        public void JoinLobbyButton()
+        {
+            string playerName = lobbyPlayerNameInputField.text.Trim();
+
+            if(string.IsNullOrEmpty(playerName))
+            {
+                Debug.LogWarning("Player name cannot be empty!");
+                return;
+            }
+
+            PhotonNetwork.NickName = playerName;
+
+            if(PhotonNetwork.IsConnected)
+            {
+                PhotonNetwork.JoinLobby();
+            }
+            else
+            {
+                PhotonNetwork.ConnectUsingSettings();
+            }
+        }
+
         public void LeaderboardButton()
         {
             leaderboardPanelObj.SetActive(true);
@@ -583,6 +610,78 @@ namespace Managers
             pauseButtonObj.SetActive(true);
             pauseMenuPanelObj.SetActive(false);
         }
+
+        public void StartButton()
+        {
+            if(PhotonNetwork.IsMasterClient)
+            {
+                Debug.Log("Starting the game...");
+                int totalPlayers = PhotonNetwork.PlayerList.Length;
+                Debug.Log("Total Number Of Players Joined : " + totalPlayers);
+                EventsManager.Invoke(Event.GameStartedMultiplayer , totalPlayers);
+
+                if(_numberOfPlayers == 2)
+                {
+                    #if UNITY_ANDROID || UNITY_IOS
+                        inGameUIPlayerNamesDisplayPanelObj.GetComponent<HorizontalLayoutGroup>().spacing = 500;          
+                    #endif
+                    
+                    #if UNITY_STANDALONE || UNITY_WEBGL
+                        inGameUIPlayerNamesDisplayPanelObj.GetComponent<HorizontalLayoutGroup>().spacing = 650;          
+                    #endif
+                }
+                
+                else if(_numberOfPlayers == 3)
+                {
+                    #if UNITY_ANDROID || UNITY_IOS
+                        inGameUIPlayerNamesDisplayPanelObj.GetComponent<HorizontalLayoutGroup>().spacing = 150;  
+                    #endif
+                    
+                    #if UNITY_STANDALONE || UNITY_WEBGL
+                        inGameUIPlayerNamesDisplayPanelObj.GetComponent<HorizontalLayoutGroup>().spacing = 250;          
+                    #endif
+                }
+                
+                else if(_numberOfPlayers == 4)
+                {
+                    #if UNITY_ANDROID || UNITY_IOS
+                        inGameUIPlayerNamesDisplayPanelObj.GetComponent<HorizontalLayoutGroup>().spacing = 25;   
+                    #endif
+                    
+                    #if UNITY_STANDALONE || UNITY_WEBGL
+                        inGameUIPlayerNamesDisplayPanelObj.GetComponent<HorizontalLayoutGroup>().spacing = 125;          
+                    #endif
+                }
+
+                for(int i = 0; i < _numberOfPlayers; i++)
+                {
+                    inGameUIPlayerNamesDisplayPanelObjs[i].SetActive(true);
+                    _playerNamesArray[i] = playerNameTMPInputFields[i].text;
+                    UpdateInGamePlayerNames(i);
+                }
+            
+                inGameUIPanelsObj.SetActive(true);
+                playerInputPanelObj.SetActive(false);
+                
+                for(int i = 0; i < gameTitleTMPTexts.Length; i++)
+                {
+                    gameTitleTMPTexts[i].enabled = false;
+                }
+                
+                string[] nameKeys = new string[_numberOfPlayers];
+                
+                for(int i = 0; i < _numberOfPlayers; i++)
+                {
+                    nameKeys[i] = "Player" + i + "Name";
+                }
+                
+                PlayerPrefsManager.SaveData(_playerNamesArray , nameKeys);
+            }
+            else
+            {
+                Debug.LogError("Only the MasterClient can start the game.");
+            }
+        }
         
         #endregion
         
@@ -742,70 +841,6 @@ namespace Managers
                 gameTitleTMPTexts[i].enabled = false;
             }
         }
-        
-        public void OnGameStartedMultiplayer(int numberOfPlayers)
-        {
-            _numberOfPlayers = numberOfPlayers;
-
-            if(_numberOfPlayers == 2)
-            {
-                #if UNITY_ANDROID || UNITY_IOS
-                    inGameUIPlayerNamesDisplayPanelObj.GetComponent<HorizontalLayoutGroup>().spacing = 500;          
-                #endif
-                
-                #if UNITY_STANDALONE || UNITY_WEBGL
-                    inGameUIPlayerNamesDisplayPanelObj.GetComponent<HorizontalLayoutGroup>().spacing = 650;          
-                #endif
-            }
-            
-            else if(_numberOfPlayers == 3)
-            {
-                #if UNITY_ANDROID || UNITY_IOS
-                    inGameUIPlayerNamesDisplayPanelObj.GetComponent<HorizontalLayoutGroup>().spacing = 150;  
-                #endif
-                
-                #if UNITY_STANDALONE || UNITY_WEBGL
-                    inGameUIPlayerNamesDisplayPanelObj.GetComponent<HorizontalLayoutGroup>().spacing = 250;          
-                #endif
-            }
-            
-            else if(_numberOfPlayers == 4)
-            {
-                #if UNITY_ANDROID || UNITY_IOS
-                    inGameUIPlayerNamesDisplayPanelObj.GetComponent<HorizontalLayoutGroup>().spacing = 25;   
-                #endif
-                
-                #if UNITY_STANDALONE || UNITY_WEBGL
-                    inGameUIPlayerNamesDisplayPanelObj.GetComponent<HorizontalLayoutGroup>().spacing = 125;          
-                #endif
-            }
-
-            for(int i = 0; i < _numberOfPlayers; i++)
-            {
-                inGameUIPlayerNamesDisplayPanelObjs[i].SetActive(true);
-                _playerNamesArray[i] = playerNameTMPInputFields[i].text;
-                UpdateInGamePlayerNames(i);
-            }
-        
-            inGameUIPanelsObj.SetActive(true);
-            lobbyPanelObj.SetActive(false);
-            playerInputPanelObj.SetActive(false);
-            EventsManager.Invoke(Event.GameStarted);
-            
-            for(int i = 0; i < gameTitleTMPTexts.Length; i++)
-            {
-                gameTitleTMPTexts[i].enabled = false;
-            }
-            
-            string[] nameKeys = new string[_numberOfPlayers];
-            
-            for(int i = 0; i < _numberOfPlayers; i++)
-            {
-                nameKeys[i] = "Player" + i + "Name";
-            }
-            
-            PlayerPrefsManager.SaveData(_playerNamesArray , nameKeys);
-        }
 
         private void OnGameTied()
         {
@@ -843,16 +878,31 @@ namespace Managers
                 }
             }
         }
-
-        private void OnLobbyJoinButtonPressed()
+        
+        private void OnLobbyPlayersListUpdated(Player[] lobbyPlayersList)
         {
-            lobbyEnteringPanelObj.SetActive(false);
-            lobbyPanelObj.SetActive(true);
+            string playerNames = "Players Joined the Lobby\n";
+
+            foreach(Player player in lobbyPlayersList)
+            {
+                playerNames += $"{player.NickName}\n";
+            }
+
+            lobbyPlayersListTMPText.text = playerNames;
         }
 
         private void OnNumberOfPlayersToggled()
         {
             SetNumberOfPlayers();
+        }
+
+        private void OnPlayerJoinedRoom()
+        {
+            Debug.Log("Player Joined Room");
+            lobbyEnteringPanelObj.SetActive(false);
+            lobbyPanelObj.SetActive(true);
+            startButton.gameObject.SetActive(PhotonNetwork.IsMasterClient);
+            startButton.interactable = PhotonNetwork.IsMasterClient && PhotonNetwork.PlayerList.Length > 1;
         }
 
         private void OnPlayerWins(int highestScorePlayerID)
@@ -892,11 +942,11 @@ namespace Managers
                 EventsManager.SubscribeToEvent(Event.GameOver , new Action(OnGameOver));
                 EventsManager.SubscribeToEvent(Event.GamePaused , new Action(OnGamePaused));
                 EventsManager.SubscribeToEvent(Event.GameResumed , new Action(OnGameResumed));
-                EventsManager.SubscribeToEvent(Event.GameStartedMultiplayer , (Action<int>)OnGameStartedMultiplayer);
                 EventsManager.SubscribeToEvent(Event.GameTied , new Action(OnGameTied));
                 EventsManager.SubscribeToEvent(Event.KeyboardTabPressed , new Action(OnKeyboardTabPressed));
-                EventsManager.SubscribeToEvent(Event.LobbyJoinButtonPressed , new Action(OnLobbyJoinButtonPressed));
+                EventsManager.SubscribeToEvent(Event.LobbyPlayersListUpdated , (Action<Player[]>)OnLobbyPlayersListUpdated);
                 EventsManager.SubscribeToEvent(Event.NumberOfPlayersToggled , new Action(OnNumberOfPlayersToggled));
+                EventsManager.SubscribeToEvent(Event.PlayerJoinedRoom , new Action(OnPlayerJoinedRoom));
                 EventsManager.SubscribeToEvent(Event.PlayerWins , (Action<int>)OnPlayerWins);
                 EventsManager.SubscribeToEvent(Event.ScoreUpdated , (Action<int[]>)OnScoreUpdated);
                 EventsManager.SubscribeToEvent(Event.PlayerTotalReceived , (Action<int[]>)OnTotalReceived);    
@@ -906,11 +956,11 @@ namespace Managers
                 EventsManager.UnsubscribeFromEvent(Event.GameOver , new Action(OnGameOver));
                 EventsManager.UnsubscribeFromEvent(Event.GamePaused , new Action(OnGamePaused));
                 EventsManager.UnsubscribeFromEvent(Event.GameResumed , new Action(OnGameResumed));
-                EventsManager.UnsubscribeFromEvent(Event.GameStartedMultiplayer , (Action<int>)OnGameStartedMultiplayer);
                 EventsManager.UnsubscribeFromEvent(Event.GameTied , new Action(OnGameTied));
                 EventsManager.UnsubscribeFromEvent(Event.KeyboardTabPressed , new Action(OnKeyboardTabPressed));
-                EventsManager.UnsubscribeFromEvent(Event.LobbyJoinButtonPressed , new Action(OnLobbyJoinButtonPressed));
+                EventsManager.UnsubscribeFromEvent(Event.LobbyPlayersListUpdated , (Action<Player[]>)OnLobbyPlayersListUpdated);
                 EventsManager.UnsubscribeFromEvent(Event.NumberOfPlayersToggled , new Action(OnNumberOfPlayersToggled));
+                EventsManager.UnsubscribeFromEvent(Event.PlayerJoinedRoom , new Action(OnPlayerJoinedRoom));
                 EventsManager.UnsubscribeFromEvent(Event.PlayerWins , (Action<int>)OnPlayerWins);
                 EventsManager.UnsubscribeFromEvent(Event.ScoreUpdated , (Action<int[]>)OnScoreUpdated);
                 EventsManager.UnsubscribeFromEvent(Event.PlayerTotalReceived , (Action<int[]>)OnTotalReceived);

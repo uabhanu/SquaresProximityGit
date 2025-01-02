@@ -2,23 +2,15 @@ namespace Managers
 {
     using Photon.Pun;
     using Photon.Realtime;
-    using TMPro;
     using UnityEngine;
-    using UnityEngine.UI;
 
     public class LobbyManager : MonoBehaviourPunCallbacks
     {
-        [SerializeField] private Button startButton;
-        [SerializeField] private TMP_InputField playerNameTMPInputField;
-        [SerializeField] private TMP_Text lobbyPlayersListTMPText;
-        [SerializeField] private string lobbyName = "ProximityLobby";
+        private string _lobbyName = "ProximityLobby";
 
         private void Start()
         {
             PhotonNetwork.AutomaticallySyncScene = true;
-            
-            startButton.gameObject.SetActive(false);
-            startButton.onClick.AddListener(OnStartButtonPressed);
 
             if(!PhotonNetwork.IsConnected)
             {
@@ -42,30 +34,8 @@ namespace Managers
         public override void OnJoinedRoom()
         {
             Debug.Log($"Joined room: {PhotonNetwork.CurrentRoom.Name}");
+            EventsManager.Invoke(Event.PlayerJoinedRoom);
             UpdatePlayerList();
-            UpdateStartButtonState();
-        }
-        
-        public void OnJoinLobbyButtonClicked()
-        {
-            string playerName = playerNameTMPInputField.text.Trim();
-
-            if(string.IsNullOrEmpty(playerName))
-            {
-                Debug.LogWarning("Player name cannot be empty!");
-                return;
-            }
-
-            PhotonNetwork.NickName = playerName;
-
-            if(PhotonNetwork.IsConnected)
-            {
-                PhotonNetwork.JoinLobby();
-            }
-            else
-            {
-                PhotonNetwork.ConnectUsingSettings();
-            }
         }
 
         private void JoinOrCreateRoom()
@@ -76,47 +46,25 @@ namespace Managers
                 IsVisible = true,
                 IsOpen = true
             };
-
-            PhotonNetwork.JoinOrCreateRoom(lobbyName , roomOptions , TypedLobby.Default);
+        
+            PhotonNetwork.JoinOrCreateRoom(_lobbyName , roomOptions , TypedLobby.Default);
         }
         
         public override void OnPlayerEnteredRoom(Player newPlayer)
         {
             Debug.Log($"{newPlayer.NickName} has joined the room.");
+            EventsManager.Invoke(Event.PlayerJoinedRoom);
             UpdatePlayerList();
-            UpdateStartButtonState();
         }
 
         public override void OnPlayerLeftRoom(Player otherPlayer)
         {
             Debug.Log($"{otherPlayer.NickName} has left the room.");
             UpdatePlayerList();
-            UpdateStartButtonState();
-        }
-
-        public void OnStartButtonPressed()
-        {
-            if(PhotonNetwork.IsMasterClient)
-            {
-                Debug.Log("Starting the game...");
-                int totalPlayers = PhotonNetwork.PlayerList.Length;
-                Debug.Log("Total Number Of Players Joined : " + totalPlayers);
-                EventsManager.Invoke(Event.GameStartedMultiplayer , totalPlayers);
-            }
-            else
-            {
-                Debug.LogError("Only the MasterClient can start the game.");
-            }
         }
         
         private void UpdatePlayerList()
         {
-            if(lobbyPlayersListTMPText == null)
-            {
-                Debug.LogError("lobbyPlayersListTMPText is not assigned in the Inspector!");
-                return;
-            }
-
             Player[] players = PhotonNetwork.PlayerList;
             string playerNames = "Players Joined the Lobby\n";
 
@@ -124,15 +72,8 @@ namespace Managers
             {
                 playerNames += $"{player.NickName}\n";
             }
-
-            lobbyPlayersListTMPText.text = playerNames;
-        }
-        
-        private void UpdateStartButtonState()
-        {
-            bool isMasterClient = PhotonNetwork.IsMasterClient;
-            startButton.gameObject.SetActive(isMasterClient);
-            startButton.interactable = isMasterClient && PhotonNetwork.PlayerList.Length > 1;
+            
+            EventsManager.Invoke(Event.LobbyPlayersListUpdated , players);
         }
     }
 }

@@ -6886,9 +6886,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3771763688728783762}
-        m_TargetAssemblyTypeName: Managers.LobbyManager, Assembly-CSharp
-        m_MethodName: OnJoinLobbyButtonClicked
+      - m_Target: {fileID: 8527379706435513361}
+        m_TargetAssemblyTypeName: Managers.InGameUIManager, Assembly-CSharp
+        m_MethodName: JoinLobbyButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11185,9 +11185,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee265a268f0df994e91484efa309ca01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startButton: {fileID: 8953137636371577525}
-  playerNameTMPInputField: {fileID: 1064675076698738305}
-  lobbyPlayersListTMPText: {fileID: 6744631006158127058}
   lobbyName: ProximityLobby
 --- !u!1 &5161909220664174556
 GameObject:
@@ -11864,7 +11861,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5409329312444891531
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11924,14 +11921,14 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 4908188598237898658}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3771763688728783762}
-        m_TargetAssemblyTypeName: Managers.LobbyManager, Assembly-CSharp
-        m_MethodName: OnStartButtonPressed
+      - m_Target: {fileID: 8527379706435513361}
+        m_TargetAssemblyTypeName: Managers.InGameUIManager, Assembly-CSharp
+        m_MethodName: StartButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12183,6 +12180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b8941e8874b3524fa57ac2b7c73445a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startButton: {fileID: 8953137636371577525}
   coinUIObj: {fileID: 3926616197132561687}
   continueButtonObj: {fileID: 6993070605496638589}
   gameIntroPanelObj: {fileID: 6794108785907823149}
@@ -12226,7 +12224,7 @@ MonoBehaviour:
   - {fileID: 5065678277369122788}
   - {fileID: 6007532484774958626}
   backButtonTMPText: {fileID: 3626058884489032781}
-  playersListTMPText: {fileID: 6744631006158127058}
+  lobbyPlayersListTMPText: {fileID: 6744631006158127058}
   gameTitleTMPTexts:
   - {fileID: 7831610990166889887}
   - {fileID: 6821126825103719159}
