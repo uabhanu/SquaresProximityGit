@@ -31,6 +31,7 @@ namespace Managers
         private int[] _playerScoresArray;
         private int[] _playersTotalWinsArray;
         private int[] _totalReceivedArray;
+        private PhotonView _photonView;
         private string _serverName;
         private string _serverPassword;
         private string[] _playerNamesArray;
@@ -78,6 +79,7 @@ namespace Managers
         private void Start()
         {
             AdsManager.Instance.ShowInterstitialAd();
+            _photonView = GetComponent<PhotonView>();
             
             continueButtonObj.SetActive(false);
             gameOverPanelsObj.SetActive(false);
@@ -616,68 +618,23 @@ namespace Managers
             {
                 Debug.Log("Starting the game...");
                 _numberOfPlayers = PhotonNetwork.PlayerList.Length;
-                Debug.Log("Total Number Of Players Joined : " + _numberOfPlayers);
-                EventsManager.Invoke(Event.GameStartedMultiplayer , _numberOfPlayers);
+                Debug.Log($"Total Number Of Players Joined : {_numberOfPlayers}");
 
-                if(_numberOfPlayers == 2)
+                if(_photonView == null)
                 {
-                    #if UNITY_ANDROID || UNITY_IOS
-                        inGameUIPlayerNamesDisplayPanelObj.GetComponent<HorizontalLayoutGroup>().spacing = 500;          
-                    #endif
-                    
-                    #if UNITY_STANDALONE || UNITY_WEBGL
-                        inGameUIPlayerNamesDisplayPanelObj.GetComponent<HorizontalLayoutGroup>().spacing = 650;          
-                    #endif
+                    Debug.LogError("PhotonView is missing or not assigned to InGameUIManager!");
+                    return;
                 }
                 
-                else if(_numberOfPlayers == 3)
+                if(_photonView.ViewID <= 0)
                 {
-                    #if UNITY_ANDROID || UNITY_IOS
-                        inGameUIPlayerNamesDisplayPanelObj.GetComponent<HorizontalLayoutGroup>().spacing = 150;  
-                    #endif
-                    
-                    #if UNITY_STANDALONE || UNITY_WEBGL
-                        inGameUIPlayerNamesDisplayPanelObj.GetComponent<HorizontalLayoutGroup>().spacing = 250;          
-                    #endif
+                    Debug.LogError("PhotonView does not have a valid ViewID! Check if it is properly assigned.");
+                    return;
                 }
                 
-                else if(_numberOfPlayers == 4)
-                {
-                    #if UNITY_ANDROID || UNITY_IOS
-                        inGameUIPlayerNamesDisplayPanelObj.GetComponent<HorizontalLayoutGroup>().spacing = 25;   
-                    #endif
-                    
-                    #if UNITY_STANDALONE || UNITY_WEBGL
-                        inGameUIPlayerNamesDisplayPanelObj.GetComponent<HorizontalLayoutGroup>().spacing = 125;          
-                    #endif
-                }
-
-                Player[] players = PhotonNetwork.PlayerList;
-                
-                for(int i = 0; i < players.Length; i++)
-                {
-                    inGameUIPlayerNamesDisplayPanelObjs[i].SetActive(true);
-                    _playerNamesArray[i] = players[i].NickName;
-                    UpdateInGamePlayerNames(i);
-                }
-            
-                inGameUIPanelsObj.SetActive(true);
-                lobbyPanelObj.SetActive(false);
-                playerInputPanelObj.SetActive(false);
-                
-                for(int i = 0; i < gameTitleTMPTexts.Length; i++)
-                {
-                    gameTitleTMPTexts[i].enabled = false;
-                }
-                
-                string[] nameKeys = new string[_numberOfPlayers];
-                
-                for(int i = 0; i < _numberOfPlayers; i++)
-                {
-                    nameKeys[i] = "Player" + i + "Name";
-                }
-                
-                PlayerPrefsManager.SaveData(_playerNamesArray , nameKeys);
+                Debug.Log("Sending StartGameOnAllClients RPC...");
+                _photonView.RPC("StartGameOnAllClients" , RpcTarget.All , _numberOfPlayers);
+                SetupGame();
             }
             else
             {
@@ -693,7 +650,7 @@ namespace Managers
         {
             if(_onlineToggleBool)
             {
-                Debug.LogWarning("SetNumberOfPlayers was called in online mode. Ignored.");
+                //Debug.LogWarning("SetNumberOfPlayers was called in online mode. Ignored.");
                 return;
             }
             
@@ -729,11 +686,11 @@ namespace Managers
         {
             if(!_onlineToggleBool)
             {
-                Debug.LogWarning("SetNumberOfPlayersFromRPC was called in offline mode. Ignored.");
+                //Debug.LogWarning("SetNumberOfPlayersFromRPC was called in offline mode. Ignored.");
                 return;
             }
             
-            Debug.Log($"Setting number of players to {numberOfPlayers} via RPC.");
+            //Debug.Log($"Setting number of players to {numberOfPlayers} via RPC.");
             _numberOfPlayers = numberOfPlayers;
             
             _aiHumanSelectionsBoolArray = new bool[_numberOfPlayers];
@@ -746,11 +703,87 @@ namespace Managers
                 inGameUIPlayerNamesDisplayPanelObjs[i].SetActive(i < _numberOfPlayers);
             }
         }
+
+        private void SetupGame()
+        {
+            inGameUIPanelsObj.SetActive(true);
+            lobbyPanelObj.SetActive(false);
+            playerInputPanelObj.SetActive(false);
+            
+            for(int i = 0; i < gameTitleTMPTexts.Length; i++)
+            {
+                gameTitleTMPTexts[i].enabled = false;
+            }
+            
+            for(int i = 0; i < _numberOfPlayers; i++)
+            {
+                UpdateInGamePlayerNames(i);
+            }
+            
+            if(_numberOfPlayers == 2)
+            {
+                #if UNITY_ANDROID || UNITY_IOS
+                    inGameUIPlayerNamesDisplayPanelObj.GetComponent<HorizontalLayoutGroup>().spacing = 500;          
+                #endif
+                        
+                #if UNITY_STANDALONE || UNITY_WEBGL
+                    inGameUIPlayerNamesDisplayPanelObj.GetComponent<HorizontalLayoutGroup>().spacing = 650;          
+                #endif
+            }
+            
+            else if(_numberOfPlayers == 3)
+            {
+                #if UNITY_ANDROID || UNITY_IOS
+                    inGameUIPlayerNamesDisplayPanelObj.GetComponent<HorizontalLayoutGroup>().spacing = 150;  
+                #endif
+                        
+                #if UNITY_STANDALONE || UNITY_WEBGL
+                    inGameUIPlayerNamesDisplayPanelObj.GetComponent<HorizontalLayoutGroup>().spacing = 250;          
+                #endif
+            }
+            
+            else if(_numberOfPlayers == 4)
+            {
+                #if UNITY_ANDROID || UNITY_IOS
+                    inGameUIPlayerNamesDisplayPanelObj.GetComponent<HorizontalLayoutGroup>().spacing = 25;   
+                #endif
+                        
+                #if UNITY_STANDALONE || UNITY_WEBGL
+                    inGameUIPlayerNamesDisplayPanelObj.GetComponent<HorizontalLayoutGroup>().spacing = 125;          
+                #endif
+            }
+                    
+            for(int i = 0; i < gameTitleTMPTexts.Length; i++)
+            {
+                gameTitleTMPTexts[i].enabled = false;
+            }
+
+            string[] nameKeys = new string[_numberOfPlayers];
+            
+            for(int i = 0; i < _numberOfPlayers; i++)
+            {
+                nameKeys[i] = "Player" + i + "Name";
+            }
+            
+            PlayerPrefsManager.SaveData(_playerNamesArray , nameKeys);
+        }
         
         private void UpdateInGamePlayerNames(int playerID)
         {
             string playerName = playerNameTMPInputFields[playerID].text;
             EventsManager.Invoke(Event.PlayerNamesUpdated , playerID , playerName);
+        }
+        
+        #endregion
+        
+        #region Photon Pun Functions
+        
+        [PunRPC]
+        private void StartGameOnAllClients(int numberOfPlayers)
+        {
+            Debug.Log($"[RPC] StartGameOnAllClients invoked with {numberOfPlayers} players.");
+            _numberOfPlayers = numberOfPlayers;
+            SetupGame();
         }
         
         #endregion
@@ -900,7 +933,6 @@ namespace Managers
 
         private void OnPlayerJoinedRoom()
         {
-            Debug.Log("Player Joined Room");
             lobbyEnteringPanelObj.SetActive(false);
             lobbyPanelObj.SetActive(true);
             startButton.gameObject.SetActive(PhotonNetwork.IsMasterClient);
