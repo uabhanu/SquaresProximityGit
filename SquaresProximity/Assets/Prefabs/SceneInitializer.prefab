@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 515925d43431778469c30b09dee43b18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isOnlineMultiplayer: 1
   sceneObjectsList:
   - {fileID: 3070660974380164100, guid: 2958e4083ada13e4ea4ebf52c33fe73a, type: 3}
   - {fileID: 1916399765350950864, guid: ef374e856b97d7e4ca59e160a542cac9, type: 3}
