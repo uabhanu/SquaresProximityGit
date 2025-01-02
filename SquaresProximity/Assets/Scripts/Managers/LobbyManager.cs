@@ -2,7 +2,7 @@ namespace Managers
 {
     using Photon.Pun;
     using Photon.Realtime;
-    using UnityEngine;
+    //using UnityEngine;
 
     public class LobbyManager : MonoBehaviourPunCallbacks
     {
@@ -14,26 +14,26 @@ namespace Managers
 
             if(!PhotonNetwork.IsConnected)
             {
-                Debug.Log("Connecting to Photon...");
+                //Debug.Log("Connecting to Photon...");
                 PhotonNetwork.ConnectUsingSettings();
             }
         }
 
         public override void OnConnectedToMaster()
         {
-            Debug.Log("Connected to Photon Master Server.");
+            //Debug.Log("Connected to Photon Master Server.");
         }
 
         public override void OnJoinedLobby()
         {
-            Debug.Log("Joined the lobby.");
+            //Debug.Log("Joined the lobby.");
             EventsManager.Invoke(Event.LobbyJoinButtonPressed);
             JoinOrCreateRoom();
         }
 
         public override void OnJoinedRoom()
         {
-            Debug.Log($"Joined room: {PhotonNetwork.CurrentRoom.Name}");
+            //Debug.Log($"Joined room: {PhotonNetwork.CurrentRoom.Name}");
             EventsManager.Invoke(Event.PlayerJoinedRoom);
             UpdatePlayerList();
         }
@@ -52,14 +52,14 @@ namespace Managers
         
         public override void OnPlayerEnteredRoom(Player newPlayer)
         {
-            Debug.Log($"{newPlayer.NickName} has joined the room.");
+            //Debug.Log($"{newPlayer.NickName} has joined the room.");
             EventsManager.Invoke(Event.PlayerJoinedRoom);
             UpdatePlayerList();
         }
 
         public override void OnPlayerLeftRoom(Player otherPlayer)
         {
-            Debug.Log($"{otherPlayer.NickName} has left the room.");
+            //Debug.Log($"{otherPlayer.NickName} has left the room.");
             UpdatePlayerList();
         }
         

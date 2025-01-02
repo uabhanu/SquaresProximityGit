@@ -41,13 +41,13 @@ namespace Managers
         
         public void HideBannerAd()
         {
-            Debug.Log("AdsManager: Hiding banner ad...");
+            //Debug.Log("AdsManager: Hiding banner ad...");
             IronSource.Agent.hideBanner();
         }
 
         private void InitializeAds()
         {
-            Debug.Log("AdsManager: Ads initialized.");
+            //Debug.Log("AdsManager: Ads initialized.");
             IronSource.Agent.init("1f7dd8ea5");
         }
         
@@ -58,19 +58,19 @@ namespace Managers
         
         public void LoadBannerAd()
         {
-            Debug.Log("AdsManager: Loading banner ad...");
+            //Debug.Log("AdsManager: Loading banner ad...");
             IronSource.Agent.loadBanner(IronSourceBannerSize.BANNER , IronSourceBannerPosition.BOTTOM);
         }
 
         public void LoadInterstitialAd()
         {
-            Debug.Log("AdsManager: Loading interstitial ad...");
+            //Debug.Log("AdsManager: Loading interstitial ad...");
             IronSource.Agent.loadInterstitial();
         }
         
         public void ShowBannerAd()
         {
-            Debug.Log("AdsManager: Showing banner ad...");
+            //Debug.Log("AdsManager: Showing banner ad...");
             IronSource.Agent.displayBanner();
         }
 
@@ -78,12 +78,12 @@ namespace Managers
         {
             if(IsInterstitialAdReady())
             {
-                Debug.Log("AdsManager: Showing interstitial ad...");
+                //Debug.Log("AdsManager: Showing interstitial ad...");
                 IronSource.Agent.showInterstitial();
             }
             else
             {
-                Debug.LogWarning("AdsManager: Interstitial ad is not ready yet.");
+                //Debug.LogWarning("AdsManager: Interstitial ad is not ready yet.");
                 LoadInterstitialAd();
             }
         }
