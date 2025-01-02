@@ -31,7 +31,6 @@ namespace Managers
         private int[] _playerScoresArray;
         private int[] _playersTotalWinsArray;
         private int[] _totalReceivedArray;
-        private List<string> _playerNamesList = new();
         private string _serverName;
         private string _serverPassword;
         private string[] _playerNamesArray;
@@ -616,9 +615,9 @@ namespace Managers
             if(PhotonNetwork.IsMasterClient)
             {
                 Debug.Log("Starting the game...");
-                int totalPlayers = PhotonNetwork.PlayerList.Length;
-                Debug.Log("Total Number Of Players Joined : " + totalPlayers);
-                EventsManager.Invoke(Event.GameStartedMultiplayer , totalPlayers);
+                _numberOfPlayers = PhotonNetwork.PlayerList.Length;
+                Debug.Log("Total Number Of Players Joined : " + _numberOfPlayers);
+                EventsManager.Invoke(Event.GameStartedMultiplayer , _numberOfPlayers);
 
                 if(_numberOfPlayers == 2)
                 {
@@ -653,10 +652,12 @@ namespace Managers
                     #endif
                 }
 
-                for(int i = 0; i < _numberOfPlayers; i++)
+                Player[] players = PhotonNetwork.PlayerList;
+                
+                for(int i = 0; i < players.Length; i++)
                 {
                     inGameUIPlayerNamesDisplayPanelObjs[i].SetActive(true);
-                    _playerNamesArray[i] = playerNameTMPInputFields[i].text;
+                    _playerNamesArray[i] = players[i].NickName;
                     UpdateInGamePlayerNames(i);
                 }
             
