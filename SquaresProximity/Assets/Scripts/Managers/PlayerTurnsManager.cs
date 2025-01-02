@@ -1,6 +1,7 @@
 namespace Managers
 {
     using Interfaces;
+    using Photon.Pun;
     using TMPro;
     using UnityEngine;
     using UnityEngine.UI;
@@ -9,17 +10,18 @@ namespace Managers
     {
         #region Constructor
 
-        public PlayerTurnsManager(GameManager gameManager , GridManager gridManager)
+        public PlayerTurnsManager(GameManager gameManager , GridManager gridManager , bool playerIsNowOnline)
         {
             _gameManager = gameManager;
             _gridManager = gridManager;
+            _playerIsNowOnline = playerIsNowOnline;
         }
 
         #endregion
 
         #region Variables Declarations
 
-        private bool _onlineMultiplayer;
+        private bool _playerIsNowOnline;
         private GameManager _gameManager;
         private GridManager _gridManager;
 
@@ -27,33 +29,14 @@ namespace Managers
 
         #region Functions
 
-        private void UpdateCoinValueAfterPlacement()
-        {
-            int currentPlayerID = _gameManager.CurrentPlayerID;
-
-            if(_gameManager.PlayerNumbersList[currentPlayerID].Count > 0)
-            {
-                _gameManager.CoinValue = _gameManager.GetCurrentCoinValue();
-                TMP_Text coinUITMP = _gameManager.CoinUIObj.GetComponentInChildren<TMP_Text>();
-                coinUITMP.text = _gameManager.CoinValue.ToString();
-
-                for(int i = 0; i < _gameManager.TotalReceivedArray.Length; i++)
-                {
-                    if(currentPlayerID == i)
-                    {
-                        _gameManager.TotalReceivedArray[i] += _gameManager.CoinValue;
-                    }
-                }
-
-                _gameManager.PlayerNumbersList[currentPlayerID].RemoveAt(0);
-            }
-        }
-
         public void EndPlayerTurn()
         {
-            if(_onlineMultiplayer)
+            if(_playerIsNowOnline)
             {
-                // TODO Handle multiplayer end turn logic (e.g., notify server, wait for network events)
+                Debug.Log("Notifying server: Player has ended their turn.");
+                EventsManager.Invoke(Event.OnlinePlayerTurnEnded , _gameManager.CurrentPlayerID);
+                _gameManager.CurrentPlayerID = (_gameManager.CurrentPlayerID + 1) % _gameManager.NumberOfPlayers;
+                EventsManager.Invoke(Event.OnlinePlayerTurnStarted , _gameManager.CurrentPlayerID);
             }
             else
             {
@@ -63,9 +46,19 @@ namespace Managers
 
         public void StartPlayerTurn()
         {
-            if(_onlineMultiplayer)
+            if(_playerIsNowOnline)
             {
-                // TODO Handle multiplayer start turn logic here (e.g., sync with server)
+                if(PhotonNetwork.LocalPlayer.ActorNumber == _gameManager.CurrentPlayerID + 1)
+                {
+                    Debug.Log("It's your turn!");
+                    UpdateCoinValueAfterPlacement();
+                    UpdateCoinUIImageColors();
+                    UpdateTrailColor();
+                }
+                else
+                {
+                    Debug.Log("Waiting for other players...");
+                }
             }
             else
             {
@@ -103,7 +96,7 @@ namespace Managers
                             }
                         }
                     }
-                    
+
                     currentIteration++;
                 }
 
@@ -189,6 +182,28 @@ namespace Managers
 
                 coinUIImage.color = coinColour;
                 coinUIText.color = _gameManager.GetCoinForegroundColour(_gameManager.CurrentPlayerID);
+            }
+        }
+        
+        private void UpdateCoinValueAfterPlacement()
+        {
+            int currentPlayerID = _gameManager.CurrentPlayerID;
+
+            if(_gameManager.PlayerNumbersList[currentPlayerID].Count > 0)
+            {
+                _gameManager.CoinValue = _gameManager.GetCurrentCoinValue();
+                TMP_Text coinUITMP = _gameManager.CoinUIObj.GetComponentInChildren<TMP_Text>();
+                coinUITMP.text = _gameManager.CoinValue.ToString();
+
+                for(int i = 0; i < _gameManager.TotalReceivedArray.Length; i++)
+                {
+                    if(currentPlayerID == i)
+                    {
+                        _gameManager.TotalReceivedArray[i] += _gameManager.CoinValue;
+                    }
+                }
+
+                _gameManager.PlayerNumbersList[currentPlayerID].RemoveAt(0);
             }
         }
 

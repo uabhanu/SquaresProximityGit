@@ -33,9 +33,11 @@ namespace Managers
         #region Variables Declarations
     
         private bool _isGameStarted;
+        private bool _isGameStartedMultiplayer;
         private bool _isGamePaused;
         private bool _isMoving;
         private bool _isRandomTurns;
+        private bool _playerIsNowOnline;
         private bool[] _isAIArray;
         private GameObject _coinUIObj;
         private GameObject _trailObj;
@@ -278,6 +280,7 @@ namespace Managers
         private void OnGameOver()
         {
             _isGameStarted = false;
+            _isGameStartedMultiplayer = false;
         }
 
         private void OnGamePaused()
@@ -288,7 +291,15 @@ namespace Managers
 
         private void OnGameRestarted()
         {
-            _isGameStarted = true;
+            if(!_playerIsNowOnline)
+            {
+                _isGameStarted = true;   
+            }
+            else
+            {
+                _isGameStartedMultiplayer = true;
+            }
+            
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             Time.timeScale = 1;
         }
@@ -306,7 +317,7 @@ namespace Managers
             _gridManager = FindAnyObjectByType<GridManager>();
             
             _iAIManager = new AIManager(this , _gridManager);
-            _iPlayerTurnsManager = new PlayerTurnsManager(this , _gridManager);
+            _iPlayerTurnsManager = new PlayerTurnsManager(this , _gridManager , _playerIsNowOnline);
             _iCoinPlacer = new CoinPlacer(this , _gridManager);
 
             IPlayerTurnsManager.UpdateTrailColor();
@@ -361,11 +372,11 @@ namespace Managers
         {
             _numberOfPlayers = numberOfPlayers;
             
-            _isGameStarted = true;
+            _isGameStartedMultiplayer = true;
 
             _gridManager = FindAnyObjectByType<GridManager>();
             
-            _iPlayerTurnsManager = new PlayerTurnsManager(this , _gridManager);
+            _iPlayerTurnsManager = new PlayerTurnsManager(this , _gridManager , _playerIsNowOnline);
             _iCoinPlacer = new CoinPlacer(this , _gridManager);
 
             IPlayerTurnsManager.UpdateTrailColor();
@@ -478,7 +489,7 @@ namespace Managers
         
         private void OnJoystickRightPressed()
         {
-            if(!_isGameStarted) return;
+            if(!_isGameStarted && !_isGameStartedMultiplayer) return;
 
             for(int i = 0; i < IsAIArray.Length; i++)
             {
@@ -509,7 +520,7 @@ namespace Managers
         
         private void OnJoystickUpPressed()
         {
-            if(!_isGameStarted) return;
+            if(!_isGameStarted && !_isGameStartedMultiplayer) return;
 
             for(int i = 0; i < IsAIArray.Length; i++)
             {
@@ -539,7 +550,7 @@ namespace Managers
         
         private void OnJoystickXPressed()
         {
-            if(!_isGameStarted) return;
+            if(!_isGameStarted && !_isGameStartedMultiplayer) return;
 
             for(int i = 0; i < IsAIArray.Length; i++)
             {
@@ -563,7 +574,7 @@ namespace Managers
 
         private void OnMouseLeftClicked()
         {
-            if(!_isGameStarted) return;
+            if(!_isGameStarted && !_isGameStartedMultiplayer) return;
 
             for(int i = 0; i < IsAIArray.Length; i++)
             {
@@ -585,7 +596,7 @@ namespace Managers
         
         private void OnMouseMoved()
         {
-            if(!_isGameStarted) return;
+            if(!_isGameStarted && !_isGameStartedMultiplayer) return;
 
             for(int i = 0; i < IsAIArray.Length; i++)
             {
@@ -642,7 +653,7 @@ namespace Managers
     
         private void OnTouchscreenTapped(Vector2 touchscreenPosition)
         {
-            if(!_isGameStarted) return;
+            if(!_isGameStarted && !_isGameStartedMultiplayer) return;
             
             for(int i = 0; i < IsAIArray.Length; i++)
             {
