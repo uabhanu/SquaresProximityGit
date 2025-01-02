@@ -1,6 +1,5 @@
 namespace Managers
 {
-    using Misc;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -76,7 +75,6 @@ namespace Managers
         
         private void Start()
         {
-            //TODO Once the IronSource Account is approved, build APK and test the ads
             AdsManager.Instance.ShowInterstitialAd();
             
             continueButtonObj.SetActive(false);
@@ -692,15 +690,22 @@ namespace Managers
         public void OnlineToggle()
         {
             _onlineToggleBool = onlineToggle.isOn;
-            PlayerPrefsManager.SaveData(_onlineToggleBool , OnlineKey); // Save toggle state
-
-            // Update GameMode and notify relevant classes
-            OnlineMode onlineMode = ServiceLocator.Get<OnlineMode>();
+            PlayerPrefsManager.SaveData(_onlineToggleBool , OnlineKey);
+            EventsManager.Invoke(Event.PlayerNowOnline , _onlineToggleBool);
             
-            if(onlineMode != null)
+            if(_onlineToggleBool)
             {
-                onlineMode.SetOnlineMode(_onlineToggleBool);
-                EventsManager.Invoke(Event.PlayerNowOnline , _onlineToggleBool);  // Notify listeners of the mode change
+                for(int i = 0; i < numberOfPlayersSelectionTogglesArray.Length; i++)
+                {
+                    numberOfPlayersSelectionTogglesArray[i].gameObject.SetActive(false); 
+                }
+            }
+            else
+            {
+                for(int i = 0; i < numberOfPlayersSelectionTogglesArray.Length; i++)
+                {
+                    numberOfPlayersSelectionTogglesArray[i].gameObject.SetActive(true); 
+                }
             }
         }
 
@@ -775,12 +780,12 @@ namespace Managers
                 #endif
             }
 
-            // for(int i = 0; i < _numberOfPlayers; i++)
-            // {
-            //     inGameUIPlayerNamesDisplayPanelObjs[i].SetActive(true);
-            //     _playerNamesArray[i] = playerNameTMPInputFields[i].text;
-            //     UpdateInGamePlayerNames(i);
-            // }
+            for(int i = 0; i < _numberOfPlayers; i++)
+            {
+                inGameUIPlayerNamesDisplayPanelObjs[i].SetActive(true);
+                _playerNamesArray[i] = playerNameTMPInputFields[i].text;
+                UpdateInGamePlayerNames(i);
+            }
         
             inGameUIPanelsObj.SetActive(true);
             lobbyPanelObj.SetActive(false);
@@ -850,24 +855,6 @@ namespace Managers
             SetNumberOfPlayers();
         }
 
-        private void OnPlayerNowOnline(bool onlineStatus)
-        {
-            if(onlineStatus)
-            {
-                for(int i = 0; i < numberOfPlayersSelectionTogglesArray.Length; i++)
-                {
-                   numberOfPlayersSelectionTogglesArray[i].gameObject.SetActive(false); 
-                }
-            }
-            else
-            {
-                for(int i = 0; i < numberOfPlayersSelectionTogglesArray.Length; i++)
-                {
-                    numberOfPlayersSelectionTogglesArray[i].gameObject.SetActive(true); 
-                }
-            }
-        }
-
         private void OnPlayerWins(int highestScorePlayerID)
         {
             _highestScorePlayerID = highestScorePlayerID;
@@ -910,7 +897,6 @@ namespace Managers
                 EventsManager.SubscribeToEvent(Event.KeyboardTabPressed , new Action(OnKeyboardTabPressed));
                 EventsManager.SubscribeToEvent(Event.LobbyJoinButtonPressed , new Action(OnLobbyJoinButtonPressed));
                 EventsManager.SubscribeToEvent(Event.NumberOfPlayersToggled , new Action(OnNumberOfPlayersToggled));
-                EventsManager.SubscribeToEvent(Event.PlayerNowOnline , (Action<bool>)OnPlayerNowOnline);
                 EventsManager.SubscribeToEvent(Event.PlayerWins , (Action<int>)OnPlayerWins);
                 EventsManager.SubscribeToEvent(Event.ScoreUpdated , (Action<int[]>)OnScoreUpdated);
                 EventsManager.SubscribeToEvent(Event.PlayerTotalReceived , (Action<int[]>)OnTotalReceived);    
@@ -925,7 +911,6 @@ namespace Managers
                 EventsManager.UnsubscribeFromEvent(Event.KeyboardTabPressed , new Action(OnKeyboardTabPressed));
                 EventsManager.UnsubscribeFromEvent(Event.LobbyJoinButtonPressed , new Action(OnLobbyJoinButtonPressed));
                 EventsManager.UnsubscribeFromEvent(Event.NumberOfPlayersToggled , new Action(OnNumberOfPlayersToggled));
-                EventsManager.UnsubscribeFromEvent(Event.PlayerNowOnline , (Action<bool>)OnPlayerNowOnline);
                 EventsManager.UnsubscribeFromEvent(Event.PlayerWins , (Action<int>)OnPlayerWins);
                 EventsManager.UnsubscribeFromEvent(Event.ScoreUpdated , (Action<int[]>)OnScoreUpdated);
                 EventsManager.UnsubscribeFromEvent(Event.PlayerTotalReceived , (Action<int[]>)OnTotalReceived);

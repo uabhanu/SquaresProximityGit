@@ -71,13 +71,11 @@
     <Compile Include="Assets\Photon\PhotonRealtime\Demos\DemoLoadBalancing\ConnectAndJoinRandomLb.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IPlayerTurnsManager.cs" />
     <Compile Include="Assets\Scripts\Utils\ColourAdjuster.cs" />
-    <Compile Include="Assets\Scripts\Misc\OnlineMode.cs" />
     <Compile Include="Assets\Scripts\Utils\SceneInitializer.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\Common\OnStartDelete.cs" />
     <Compile Include="Assets\Scripts\Managers\PlayerPrefsManager.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\ChatGui.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\ChatAppIdCheckerUI.cs" />
-    <Compile Include="Assets\Scripts\Misc\ServiceLocator.cs" />
     <Compile Include="Assets\Scripts\Managers\LobbyManager.cs" />
     <Compile Include="Assets\Scripts\Managers\GridManager.cs" />
     <Compile Include="Assets\Scripts\Managers\SoundManager.cs" />
@@ -903,11 +901,11 @@
     <Reference Include="Unity.InternalAPIEditorBridge.001">
       <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.InternalAPIEditorBridge.001.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.2D.Animation.Editor">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.2D.Animation.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.Services.Authentication.PlayerAccounts">
       <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.Services.Authentication.PlayerAccounts.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Animation.Editor">
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.2D.Animation.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Collections">
       <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.Collections.dll</HintPath>

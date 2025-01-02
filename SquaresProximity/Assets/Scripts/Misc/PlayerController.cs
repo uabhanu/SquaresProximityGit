@@ -8,40 +8,11 @@ namespace Misc
 
     public class PlayerController : MonoBehaviour
     {
-        private OnlineMode _onlineMode;
-        
         [SerializeField] private float mouseThreshold;
-
-        private void Awake()
-        {
-            InitializeGameMode();
-        }
 
         private void Update()
         {
-            if(_onlineMode == null)
-            {
-                InitializeGameMode();
-                if(_onlineMode == null) return;  // Skip Update if OnlineMode is still not available
-            }
-
-            if(_onlineMode.PlayerIsOnline && !IsLocalPlayerTurn())
-            {
-                // Ignore inputs if it’s not the local player’s turn in Online Multiplayer
-                return;
-            }
-
             HandleInput();
-        }
-
-        private void InitializeGameMode()
-        {
-            _onlineMode = ServiceLocator.Get<OnlineMode>();
-            
-            if(_onlineMode == null)
-            {
-                Debug.LogWarning("OnlineMode is not yet registered. Ensure it's registered before PlayerController accesses it.");
-            }
         }
 
         private void HandleInput()
@@ -95,27 +66,20 @@ namespace Misc
 
         private void ProcessEvent(Event eventType , Vector2? touchPosition = null)
         {
-            if(_onlineMode.PlayerIsOnline)
+            if(touchPosition.HasValue)
             {
-                SendRPC(eventType , touchPosition);
+                EventsManager.Invoke(eventType , touchPosition.Value);
             }
             else
             {
-                if(touchPosition.HasValue)
-                {
-                    EventsManager.Invoke(eventType , touchPosition.Value);
-                }
-                else
-                {
-                    EventsManager.Invoke(eventType);
-                }
+                EventsManager.Invoke(eventType);
             }
         }
 
         private void SendRPC(Event eventType , Vector2? touchPosition = null)
         {
             Debug.Log($"Sending RPC for event: {eventType} , position: {touchPosition}");
-            // Implement RPC calls here
+            // TODO Implement RPC calls here
         }
     }
 }

@@ -14,15 +14,14 @@ namespace Misc
         {
             _gameManager = gameManager;
             _gridManager = gridManager;
-            _onlineMode = ServiceLocator.Get<OnlineMode>();
         }
 
         #endregion
 
         #region Variables Declarations
 
+        private bool _onlineMultiplayer;
         private GameManager _gameManager;
-        private OnlineMode _onlineMode;
         private GridManager _gridManager;
 
         #endregion
@@ -31,9 +30,9 @@ namespace Misc
 
         public void BuffUpAdjacentCoin(Vector2Int cellIndexAtMousePosition)
         {
-            if(_onlineMode.PlayerIsOnline)
+            if(_onlineMultiplayer)
             {
-                // Multiplayer synchronization logic, e.g., notify other players or server.
+                // TODO Multiplayer synchronization logic, e.g., notify other players or server.
                 return;
             }
 
@@ -60,9 +59,9 @@ namespace Misc
 
         public void CaptureAdjacentCoin(Vector2Int cellIndexAtMousePosition)
         {
-            if(_onlineMode.PlayerIsOnline)
+            if(_onlineMultiplayer)
             {
-                // Multiplayer synchronization logic, e.g., notify other players or server.
+                // TODO Multiplayer synchronization logic, e.g., notify other players or server.
                 return;
             }
 
@@ -87,7 +86,7 @@ namespace Misc
 
         public void PlaceCoin(Vector2Int cellIndexAtMousePosition)
         {
-            if(_onlineMode.PlayerIsOnline)
+            if(_onlineMultiplayer)
             {
                 EventsManager.Invoke(Managers.Event.CoinPlaced , _gameManager.CoinValue , _gameManager.CurrentPlayerID);
                 return;

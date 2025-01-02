@@ -1,7 +1,6 @@
 namespace Managers
 {
     using Data;
-    using Misc;
     using Photon.Pun;
     using Random = UnityEngine.Random;
     using System;
@@ -14,8 +13,8 @@ namespace Managers
 
         private static readonly int HoleSize = Shader.PropertyToID("_HoleSize");
 
+        private bool _playerNowOnline;
         private bool _shouldGenerateEmptyCellsBool;
-        private OnlineMode _onlineMode;
         private GridData<bool> _isCellBlockedData;
         private GridData<GameObject> _coinOnTheCellData;
         private GridData<GameObject> _cellPrefabData;
@@ -87,13 +86,6 @@ namespace Managers
 
         private void Awake()
         {
-            _onlineMode = ServiceLocator.Get<OnlineMode>();
-            
-            if(_onlineMode == null)
-            {
-                Debug.LogWarning("OnlineMode not found! Defaulting to offline mode.");
-            }
-
             _randomSpritesIndex = Random.Range(0 , availableSprites.Length);
 
             if(isTestingMode)
@@ -110,7 +102,7 @@ namespace Managers
             InitializeGridData();
             ToggleEventSubscription(true);
             
-            if(_onlineMode != null && _onlineMode.PlayerIsOnline && PhotonNetwork.IsMasterClient)
+            if(_playerNowOnline && PhotonNetwork.IsMasterClient)
             {
                 GenerateAndBroadcastGrid();
             }
@@ -289,7 +281,7 @@ namespace Managers
 
         private void OnGameStarted()
         {
-            if(_onlineMode != null && _onlineMode.PlayerIsOnline && PhotonNetwork.IsMasterClient)
+            if(_playerNowOnline && PhotonNetwork.IsMasterClient)
             {
                 GenerateAndBroadcastGrid();
             }
@@ -304,17 +296,24 @@ namespace Managers
             _shouldGenerateEmptyCellsBool = !_shouldGenerateEmptyCellsBool;
         }
 
+        private void OnPlayerNowOnline(bool playerNowOnline)
+        {
+            _playerNowOnline = playerNowOnline;
+        }
+
         private void ToggleEventSubscription(bool shouldSubscribe)
         {
             if(shouldSubscribe)
             {
                 EventsManager.SubscribeToEvent(Event.GameStarted , new Action(OnGameStarted));
                 EventsManager.SubscribeToEvent(Event.HolesToggled , new Action(OnHolesToggled));
+                EventsManager.SubscribeToEvent(Event.PlayerNowOnline , (Action<bool>)OnPlayerNowOnline);
             }
             else
             {
                 EventsManager.UnsubscribeFromEvent(Event.GameStarted , new Action(OnGameStarted));
                 EventsManager.UnsubscribeFromEvent(Event.HolesToggled , new Action(OnHolesToggled));
+                EventsManager.UnsubscribeFromEvent(Event.PlayerNowOnline , (Action<bool>)OnPlayerNowOnline);
             }
         }
 

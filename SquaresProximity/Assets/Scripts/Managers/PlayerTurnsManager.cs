@@ -1,7 +1,6 @@
 namespace Managers
 {
     using Interfaces;
-    using Misc;
     using TMPro;
     using UnityEngine;
     using UnityEngine.UI;
@@ -14,14 +13,13 @@ namespace Managers
         {
             _gameManager = gameManager;
             _gridManager = gridManager;
-            _onlineMode = ServiceLocator.Get<OnlineMode>();
         }
 
         #endregion
 
         #region Variables Declarations
 
-        private OnlineMode _onlineMode;
+        private bool _onlineMultiplayer;
         private GameManager _gameManager;
         private GridManager _gridManager;
 
@@ -53,9 +51,9 @@ namespace Managers
 
         public void EndPlayerTurn()
         {
-            if(_onlineMode.PlayerIsOnline)
+            if(_onlineMultiplayer)
             {
-                // Handle multiplayer end turn logic (e.g., notify server, wait for network events)
+                // TODO Handle multiplayer end turn logic (e.g., notify server, wait for network events)
             }
             else
             {
@@ -65,9 +63,9 @@ namespace Managers
 
         public void StartPlayerTurn()
         {
-            if(_onlineMode.PlayerIsOnline)
+            if(_onlineMultiplayer)
             {
-                // Handle multiplayer start turn logic here (e.g., sync with server)
+                // TODO Handle multiplayer start turn logic here (e.g., sync with server)
             }
             else
             {
