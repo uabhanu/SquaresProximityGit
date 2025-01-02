@@ -661,6 +661,7 @@ namespace Managers
                 }
             
                 inGameUIPanelsObj.SetActive(true);
+                lobbyPanelObj.SetActive(false);
                 playerInputPanelObj.SetActive(false);
                 
                 for(int i = 0; i < gameTitleTMPTexts.Length; i++)
