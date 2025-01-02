@@ -30,6 +30,8 @@ namespace Managers
         MouseMoved,
         NumberOfPlayersSelected,
         NumberOfPlayersToggled,
+        OnlinePlayerTurnEnded,
+        OnlinePlayerTurnStarted,
         PlayerJoinedRoom,
         PlayerNamesUpdated,
         PlayerNowOnline,
