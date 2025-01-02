@@ -44,13 +44,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18e828ef22b8f1b4987d7a0605312bfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTestingMode: 0
-  holeSize: 0.401
-  cellPrefab: {fileID: 4578332380355879588, guid: d2192b7241422c0489cda2d786bcd30f, type: 3}
   gridInfo:
     Rows: 8
     Cols: 12
     CellSize: 1
+  isTestingMode: 0
+  holeSize: 0.4
+  cellPrefab: {fileID: 4578332380355879588, guid: d2192b7241422c0489cda2d786bcd30f, type: 3}
   columns: 12
   rows: 8
   holeMaterial: {fileID: 2100000, guid: 7fe21b12f380ae442823d49499f0f0ea, type: 2}
