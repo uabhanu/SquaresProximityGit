@@ -43,6 +43,7 @@ MonoBehaviour:
   - RPC_SyncGrid
   - RPC_UpdatePlayerList
   - RPC_SetNumberOfPlayers
+  - StartGameOnAllClients
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
