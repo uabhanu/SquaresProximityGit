@@ -873,11 +873,11 @@
     <Reference Include="Unity.InternalAPIEditorBridge.001">
       <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.InternalAPIEditorBridge.001.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.2D.Animation.Editor">
-      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.2D.Animation.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.Services.Authentication.PlayerAccounts">
       <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.Services.Authentication.PlayerAccounts.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Animation.Editor">
+      <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.2D.Animation.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Collections">
       <HintPath>E:\Unity Projects\Repos\SquaresProximityGit\SquaresProximity\Library\ScriptAssemblies\Unity.Collections.dll</HintPath>
