@@ -64,6 +64,7 @@
     <Compile Include="Assets\Scripts\Managers\InGameUIManager.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IAIManager.cs" />
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Utils\CustomColoursLogger.cs" />
     <Compile Include="Assets\Scripts\Utils\RadioButton.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\IgnoreUiRaycastWhenInactive.cs" />
     <Compile Include="Assets\Scripts\Data\GridInfo.cs" />
