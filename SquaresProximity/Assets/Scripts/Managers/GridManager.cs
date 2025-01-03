@@ -13,7 +13,7 @@ namespace Managers
 
         private static readonly int HoleSize = Shader.PropertyToID("_HoleSize");
 
-        private bool _playerNowOnline;
+        private bool _playerOnlineStatus;
         private bool _shouldGenerateEmptyCellsBool;
         private GridData<bool> _isCellBlockedData;
         private GridData<GameObject> _coinOnTheCellData;
@@ -101,38 +101,11 @@ namespace Managers
 
             InitializeGridData();
             ToggleEventSubscription(true);
-            
-            if(_playerNowOnline && PhotonNetwork.IsMasterClient)
-            {
-                GenerateAndBroadcastGrid();
-            }
-            else
-            {
-                GenerateGrid();
-            }
         }
 
         private void OnDestroy()
         {
             ToggleEventSubscription(false);
-        }
-
-        #endregion
-
-        #region Photon PUN Functions
-
-        [PunRPC]
-        private void RPC_SyncGrid(Vector2Int[] generatedCells)
-        {
-            foreach(var cellIndex in generatedCells)
-            {
-                Vector2 cellWorldPos = CellToWorld(cellIndex.x , cellIndex.y);
-                GameObject cell = Instantiate(cellPrefab , cellWorldPos , Quaternion.identity , transform);
-                SpriteRenderer cellRenderer = cell.GetComponentInChildren<SpriteRenderer>();
-                cellRenderer.sprite = availableSprites[_randomSpritesIndex];
-                CellSpriteRenderersData.SetValue(cellIndex.x , cellIndex.y , cellRenderer);
-                CoinOnTheCellData.SetValue(cellIndex.x , cellIndex.y , cell);
-            }
         }
 
         #endregion
@@ -145,25 +118,36 @@ namespace Managers
             var y = row * GridInfo.CellSize + transform.position.y;
             return new Vector2(x, y);
         }
-
-        private void GenerateAndBroadcastGrid()
+        
+        private void CreateCells(Vector2Int cellIndex , bool isHole)
         {
-            List<Vector2Int> generatedCells = GenerateGridData();
-            NetworkManager.Instance.SendRPC(nameof(RPC_SyncGrid) , RpcTarget.AllBuffered , generatedCells.ToArray());
+            Vector2 cellWorldPos = CellToWorld(cellIndex.x , cellIndex.y);
+            GameObject cellObject = Instantiate(cellPrefab , cellWorldPos , Quaternion.identity , transform);
+            SpriteRenderer cellRenderer = cellObject.GetComponentInChildren<SpriteRenderer>();
+            cellRenderer.sprite = availableSprites[_randomSpritesIndex];
+
+            if(isHole)
+            {
+                cellRenderer.material.SetFloat(HoleSize , holeSize);
+            }
+            
+            _cellPrefabData.SetValue(cellIndex.x , cellIndex.y , cellObject);
+            CellSpriteRenderersData.SetValue(cellIndex.x , cellIndex.y , cellRenderer);
+            CoinOnTheCellData.SetValue(cellIndex.x , cellIndex.y , cellObject);
         }
 
-        private void GenerateGrid()
+        private void GenerateGridOffline()
         {
-            List<Vector2Int> cellIndices = new List<Vector2Int>();
-
+            List<Vector2Int> cellIndices = new();
+            
             for(int col = 0; col < GridInfo.Cols; col++)
             {
                 for(int row = 0; row < GridInfo.Rows; row++)
                 {
-                    cellIndices.Add(new Vector2Int(col , row));
+                    cellIndices.Add(new Vector2Int(col, row));
                 }
             }
-
+            
             if(_shouldGenerateEmptyCellsBool)
             {
                 TotalCells -= _holeCellsCount;
@@ -180,69 +164,76 @@ namespace Managers
                     cellIndices.RemoveAt(randomIndex);
 
                     IsCellBlockedData.SetValue(cellIndex.x , cellIndex.y , true);
-
-                    Vector2 cellWorldPos = CellToWorld(cellIndex.x , cellIndex.y);
-                    GameObject cellObject = Instantiate(cellPrefab , cellWorldPos , Quaternion.identity , transform);
-                    SpriteRenderer cellRenderer = cellObject.GetComponentInChildren<SpriteRenderer>();
-                    cellRenderer.sprite = availableSprites[_randomSpritesIndex];
-                    cellRenderer.material.SetFloat(HoleSize , holeSize);
-                    _cellPrefabData.SetValue(cellIndex.x , cellIndex.y , cellObject);
-                    CellSpriteRenderersData.SetValue(cellIndex.x , cellIndex.y , cellRenderer);
+                    CreateCells(cellIndex , isHole: true);
                 }
             }
-
+            
             foreach(Vector2Int cellIndex in cellIndices)
             {
-                Vector2 cellWorldPos = CellToWorld(cellIndex.x , cellIndex.y);
-                GameObject cell = Instantiate(cellPrefab , cellWorldPos , Quaternion.identity , transform);
-                SpriteRenderer cellRenderer = cell.GetComponentInChildren<SpriteRenderer>();
-                cellRenderer.sprite = availableSprites[_randomSpritesIndex];
-                CellSpriteRenderersData.SetValue(cellIndex.x , cellIndex.y , cellRenderer);
-                CoinOnTheCellData.SetValue(cellIndex.x , cellIndex.y , cell);
+                CreateCells(cellIndex , isHole: false);
+            }
+        }
+        
+        private void GenerateGridOnline()
+        {
+            if(PhotonNetwork.IsMasterClient)
+            {
+                List<Vector2Int> generatedCells = new();
+                
+                for(int col = 0; col < GridInfo.Cols; col++)
+                {
+                    for(int row = 0; row < GridInfo.Rows; row++)
+                    {
+                        generatedCells.Add(new Vector2Int(col , row));
+                    }
+                }
+                
+                if(_shouldGenerateEmptyCellsBool)
+                {
+                    TotalCells -= _holeCellsCount;
+
+                    if(_holeCellsCount > generatedCells.Count)
+                    {
+                        _holeCellsCount = generatedCells.Count;
+                    }
+
+                    for(int i = 0; i < _holeCellsCount; i++)
+                    {
+                        int randomIndex = Random.Range(0 , generatedCells.Count);
+                        Vector2Int cellIndex = generatedCells[randomIndex];
+                        generatedCells.RemoveAt(randomIndex);
+
+                        IsCellBlockedData.SetValue(cellIndex.x , cellIndex.y , true);
+                        CreateCells(cellIndex , isHole: true);
+                    }
+                }
+                
+                foreach(Vector2Int cellIndex in generatedCells)
+                {
+                    CreateCells(cellIndex, isHole: false);
+                }
+                
+                NetworkManager.Instance.SetSyncedGridCells(generatedCells);
+            }
+            else
+            {
+                var syncedGridCells = NetworkManager.Instance.SyncedGridCells;
+
+                foreach(var cellIndex in syncedGridCells)
+                {
+                    bool isHole = IsCellBlockedData.GetValue(cellIndex.x , cellIndex.y);
+                    CreateCells(cellIndex , isHole);
+                }
             }
         }
 
-        private List<Vector2Int> GenerateGridData()
+        private int GetRandomDivisibleNumber(int minValue , int maxValue , int divisor1 , int divisor2)
         {
-            List<Vector2Int> cellIndices = new List<Vector2Int>();
+            int randomValue = Random.Range(minValue , maxValue + 1);
 
-            for (int col = 0; col < GridInfo.Cols; col++)
+            while(randomValue % divisor1 != 0 || randomValue % divisor2 != 0)
             {
-                for (int row = 0; row < GridInfo.Rows; row++)
-                {
-                    cellIndices.Add(new Vector2Int(col, row));
-                }
-            }
-
-            if (_shouldGenerateEmptyCellsBool)
-            {
-                TotalCells -= _holeCellsCount;
-
-                if (_holeCellsCount > cellIndices.Count)
-                {
-                    _holeCellsCount = cellIndices.Count;
-                }
-
-                for (int i = 0; i < _holeCellsCount; i++)
-                {
-                    int randomIndex = Random.Range(0, cellIndices.Count);
-                    Vector2Int cellIndex = cellIndices[randomIndex];
-                    cellIndices.RemoveAt(randomIndex);
-
-                    IsCellBlockedData.SetValue(cellIndex.x, cellIndex.y, true);
-                }
-            }
-
-            return cellIndices;
-        }
-
-        private int GetRandomDivisibleNumber(int minValue, int maxValue, int divisor1, int divisor2)
-        {
-            int randomValue = Random.Range(minValue, maxValue + 1);
-
-            while (randomValue % divisor1 != 0 || randomValue % divisor2 != 0)
-            {
-                randomValue = Random.Range(minValue, maxValue + 1);
+                randomValue = Random.Range(minValue , maxValue + 1);
             }
 
             return randomValue;
@@ -250,14 +241,14 @@ namespace Managers
 
         private void InitializeGridData()
         {
-            _cellPrefabData = new GridData<GameObject>(GridInfo);
-            CellSpriteRenderersData = new GridData<SpriteRenderer>(GridInfo);
-            CoinOnTheCellData = new GridData<GameObject>(GridInfo);
-            CoinValueData = new GridData<int>(GridInfo);
-            _holeCellsCount = GetRandomDivisibleNumber(18, 30, 2, 3);
-            IsCellBlockedData = new GridData<bool>(GridInfo);
-            PlayerIDData = new GridData<int>(GridInfo);
-            TotalCells = GridInfo.Cols * GridInfo.Rows;
+            _cellPrefabData = new GridData<GameObject>(gridInfo);
+            _cellSpriteRenderersData = new GridData<SpriteRenderer>(gridInfo);
+            _coinOnTheCellData = new GridData<GameObject>(gridInfo);
+            _coinValueData = new GridData<int>(gridInfo);
+            _holeCellsCount = GetRandomDivisibleNumber(18 , 30 , 2 , 3);
+            _isCellBlockedData = new GridData<bool>(gridInfo);
+            _playerIDData = new GridData<int>(gridInfo);
+            _totalCells = gridInfo.Cols * gridInfo.Rows;
         }
 
         public Vector2Int WorldToCell(Vector3 worldPosition)
@@ -281,13 +272,13 @@ namespace Managers
 
         private void OnGameStarted()
         {
-            if(_playerNowOnline && PhotonNetwork.IsMasterClient)
+            if(_playerOnlineStatus && PhotonNetwork.IsMasterClient)
             {
-                GenerateAndBroadcastGrid();
+                GenerateGridOnline();
             }
             else
             {
-                GenerateGrid();
+                GenerateGridOffline();
             }
         }
 
@@ -296,9 +287,9 @@ namespace Managers
             _shouldGenerateEmptyCellsBool = !_shouldGenerateEmptyCellsBool;
         }
 
-        private void OnPlayerNowOnline(bool playerNowOnline)
+        private void OnPlayerOnlineStatusUpdate(bool playerNowOnline)
         {
-            _playerNowOnline = playerNowOnline;
+            _playerOnlineStatus = playerNowOnline;
         }
 
         private void ToggleEventSubscription(bool shouldSubscribe)
@@ -307,13 +298,13 @@ namespace Managers
             {
                 EventsManager.SubscribeToEvent(Event.GameStarted , new Action(OnGameStarted));
                 EventsManager.SubscribeToEvent(Event.HolesToggled , new Action(OnHolesToggled));
-                EventsManager.SubscribeToEvent(Event.PlayerNowOnline , (Action<bool>)OnPlayerNowOnline);
+                EventsManager.SubscribeToEvent(Event.PlayerOnlineStatus , (Action<bool>)OnPlayerOnlineStatusUpdate);
             }
             else
             {
                 EventsManager.UnsubscribeFromEvent(Event.GameStarted , new Action(OnGameStarted));
                 EventsManager.UnsubscribeFromEvent(Event.HolesToggled , new Action(OnHolesToggled));
-                EventsManager.UnsubscribeFromEvent(Event.PlayerNowOnline , (Action<bool>)OnPlayerNowOnline);
+                EventsManager.UnsubscribeFromEvent(Event.PlayerOnlineStatus , (Action<bool>)OnPlayerOnlineStatusUpdate);
             }
         }
 
