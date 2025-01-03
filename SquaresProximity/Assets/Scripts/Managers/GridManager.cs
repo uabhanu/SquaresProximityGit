@@ -149,7 +149,7 @@ namespace Managers
         private void GenerateAndBroadcastGrid()
         {
             List<Vector2Int> generatedCells = GenerateGridData();
-            photonView.RPC(nameof(RPC_SyncGrid) , RpcTarget.AllBuffered , generatedCells.ToArray());
+            NetworkManager.Instance.SendRPC(nameof(RPC_SyncGrid) , RpcTarget.AllBuffered , generatedCells.ToArray());
         }
 
         private void GenerateGrid()

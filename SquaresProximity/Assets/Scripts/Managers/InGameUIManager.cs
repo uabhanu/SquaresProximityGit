@@ -614,26 +614,12 @@ namespace Managers
 
         public void StartButton()
         {
-            if(PhotonNetwork.IsMasterClient)
+            if(NetworkManager.Instance.IsMasterClient)
             {
                 Debug.Log("Starting the game...");
-                _numberOfPlayers = PhotonNetwork.PlayerList.Length;
-                Debug.Log($"Total Number Of Players Joined : {_numberOfPlayers}");
-
-                if(_photonView == null)
-                {
-                    Debug.LogError("PhotonView is missing or not assigned to InGameUIManager!");
-                    return;
-                }
-                
-                if(_photonView.ViewID <= 0)
-                {
-                    Debug.LogError("PhotonView does not have a valid ViewID! Check if it is properly assigned.");
-                    return;
-                }
-                
-                Debug.Log("Sending StartGameOnAllClients RPC...");
-                _photonView.RPC("StartGameOnAllClients" , RpcTarget.All , _numberOfPlayers);
+                int playerCount = NetworkManager.Instance.PlayerCount;
+                Debug.Log($"Total Number Of Players Joined : {playerCount}");
+                NetworkManager.Instance.SendRPC("StartGameOnAllClients" , RpcTarget.All , playerCount);
                 SetupGame();
             }
             else
