@@ -34,7 +34,7 @@ namespace Managers
         OnlinePlayerTurnStarted,
         PlayerJoinedRoom,
         PlayerNamesUpdated,
-        PlayerNowOnline,
+        PlayerOnlineStatus,
         PlayerTotalReceived,
         PlayerWins,
         RandomTurnsToggled,
