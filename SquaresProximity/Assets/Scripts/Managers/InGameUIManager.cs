@@ -1,3 +1,5 @@
+using Utils;
+
 namespace Managers
 {
     using Photon.Pun;
@@ -379,21 +381,29 @@ namespace Managers
         {
             string playerName = lobbyPlayerNameInputField.text.Trim();
 
-            if(string.IsNullOrEmpty(playerName))
+            if (string.IsNullOrEmpty(playerName))
             {
                 Debug.LogWarning("Player name cannot be empty!");
                 return;
             }
 
-            PhotonNetwork.NickName = playerName;
+            NetworkManager.Instance.SetPlayerName(playerName);
 
-            if(PhotonNetwork.IsConnected)
+            if(!NetworkManager.Instance.IsConnected)
             {
-                PhotonNetwork.JoinLobby();
+                CustomColoursLogger.LogWarning("Sir Bhanu, Not connected. Attempting to connect...");
+                NetworkManager.Instance.Connect();
             }
+            
+            else if(PhotonNetwork.NetworkClientState == ClientState.ConnectedToMasterServer)
+            {
+                CustomColoursLogger.LogInfo("Sir Bhanu, Connected to Master Server. Joining lobby...");
+                NetworkManager.Instance.JoinRoom("SP Room");
+            }
+            
             else
             {
-                PhotonNetwork.ConnectUsingSettings();
+                CustomColoursLogger.LogError($"Sir Bhanu, Cannot join lobby. Current state : {PhotonNetwork.NetworkClientState}");
             }
         }
 
