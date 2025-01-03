@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 515925d43431778469c30b09dee43b18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOnlineMultiplayer: 1
   sceneObjectsList:
   - {fileID: 3070660974380164100, guid: 2958e4083ada13e4ea4ebf52c33fe73a, type: 3}
   - {fileID: 1916399765350950864, guid: ef374e856b97d7e4ca59e160a542cac9, type: 3}
@@ -52,6 +51,7 @@ MonoBehaviour:
   - {fileID: 3996628289540905049, guid: abf4f1bf2af2d2443ab17363f8b41087, type: 3}
   - {fileID: 3495540595755424721, guid: 07575900dcc579b42aeed28a54155773, type: 3}
   - {fileID: 6885675273128450885, guid: a7474fed4851ea44c8096110c60471f8, type: 3}
+  - {fileID: 1013207981054189247, guid: aa0bd6d45f93638489741c85dbe6795c, type: 3}
   - {fileID: 4498203541992366259, guid: c78ea13eef5c04f408e79b46abbb51dd, type: 3}
   - {fileID: 8660565226316340475, guid: 3323a56c2dc5bd3469c8e768ef605bd2, type: 3}
   - {fileID: 420379883145056156, guid: 648777223c9e5914085fb105c6fa5a5c, type: 3}
