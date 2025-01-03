@@ -127,8 +127,6 @@ namespace Managers
             }
             
             SetNumberOfPlayers();
-            SetNumberOfPlayersFromRPC(0);
-
             ToggleEventSubscription(true);
         }
 
@@ -381,9 +379,9 @@ namespace Managers
         {
             string playerName = lobbyPlayerNameInputField.text.Trim();
 
-            if (string.IsNullOrEmpty(playerName))
+            if(string.IsNullOrEmpty(playerName))
             {
-                Debug.LogWarning("Player name cannot be empty!");
+                CustomColoursLogger.LogError("Sir Bhanu, Player name cannot be empty! :(");
                 return;
             }
 
@@ -624,14 +622,14 @@ namespace Managers
         {
             if(NetworkManager.Instance.IsMasterClient)
             {
-                Debug.Log("Starting the game...");
+                CustomColoursLogger.LogWarning("Sir Bhanu, Starting the game...");
                 int playerCount = NetworkManager.Instance.PlayerCount;
-                Debug.Log($"Total Number Of Players Joined : {playerCount}");
+                CustomColoursLogger.LogWarning($"Sir Bhanu, Total Number Of Players Joined : {playerCount} :)");
                 SetupGame();
             }
             else
             {
-                Debug.LogError("Only the MasterClient can start the game.");
+                CustomColoursLogger.LogError("Sir Bhanu, Only the MasterClient can start the game :(");
             }
         }
         
@@ -643,7 +641,7 @@ namespace Managers
         {
             if(_onlineToggleBool)
             {
-                //Debug.LogWarning("SetNumberOfPlayers was called in online mode. Ignored.");
+                CustomColoursLogger.LogWarning("Sir Bhanu, SetNumberOfPlayers was called in online mode. Ignored :)");
                 return;
             }
             
@@ -673,28 +671,6 @@ namespace Managers
 
             PlayerPrefs.SetInt("NumberOfPlayers" , _numberOfPlayers);
             PlayerPrefs.Save();
-        }
-        
-        public void SetNumberOfPlayersFromRPC(int numberOfPlayers)
-        {
-            if(!_onlineToggleBool)
-            {
-                //Debug.LogWarning("SetNumberOfPlayersFromRPC was called in offline mode. Ignored.");
-                return;
-            }
-            
-            //Debug.Log($"Setting number of players to {numberOfPlayers} via RPC.");
-            _numberOfPlayers = numberOfPlayers;
-            
-            _aiHumanSelectionsBoolArray = new bool[_numberOfPlayers];
-            _playerNamesArray = new string[_numberOfPlayers];
-            _playersTotalWinsArray = new int[_numberOfPlayers];
-            _totalReceivedArray = new int[_numberOfPlayers];
-            
-            for(int i = 0; i < inGameUIPlayerNamesDisplayPanelObjs.Length; i++)
-            {
-                inGameUIPlayerNamesDisplayPanelObjs[i].SetActive(i < _numberOfPlayers);
-            }
         }
 
         private void SetupGame()
@@ -836,10 +812,11 @@ namespace Managers
         {
             _onlineToggleBool = onlineToggle.isOn;
             PlayerPrefsManager.SaveData(_onlineToggleBool , OnlineKey);
-            EventsManager.Invoke(Event.PlayerOnlineStatus , _onlineToggleBool);
             
             if(_onlineToggleBool)
             {
+                EventsManager.Invoke(Event.PlayerOnlineStatus , _onlineToggleBool);
+                
                 for(int i = 0; i < numberOfPlayersSelectionTogglesArray.Length; i++)
                 {
                     numberOfPlayersSelectionTogglesArray[i].gameObject.SetActive(false); 
@@ -847,6 +824,8 @@ namespace Managers
             }
             else
             {
+                EventsManager.Invoke(Event.PlayerOnlineStatus , _onlineToggleBool);
+                
                 for(int i = 0; i < numberOfPlayersSelectionTogglesArray.Length; i++)
                 {
                     numberOfPlayersSelectionTogglesArray[i].gameObject.SetActive(true); 
