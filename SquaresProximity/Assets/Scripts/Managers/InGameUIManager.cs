@@ -11,7 +11,7 @@ namespace Managers
     using UnityEngine.SceneManagement;
     using UnityEngine.UI;
 
-    public class InGameUIManager : MonoBehaviour
+    public class InGameUIManager : MonoBehaviour , IPunObservable
     {
         #region Variable Declarations
 
@@ -31,7 +31,6 @@ namespace Managers
         private int[] _playerScoresArray;
         private int[] _playersTotalWinsArray;
         private int[] _totalReceivedArray;
-        private PhotonView _photonView;
         private string _serverName;
         private string _serverPassword;
         private string[] _playerNamesArray;
@@ -61,11 +60,11 @@ namespace Managers
         [SerializeField] private TMP_InputField[] playerNameTMPInputFields;
         [SerializeField] private TMP_Text backButtonTMPText;
         [SerializeField] private TMP_Text lobbyPlayersListTMPText;
+        [SerializeField] private TMP_Text[] coinScoreTMPTexts;
         [SerializeField] private TMP_Text[] gameTitleTMPTexts;
         [SerializeField] private TMP_Text[] totalReceivedTMPTexts;
         [SerializeField] private TMP_Text[] playerTotalWinsLabelsTMPTexts;
         [SerializeField] private TMP_Text[] playerWinsLabelsTMPTexts;
-        [SerializeField] private TMP_Text[] coinScoreTMPTexts;
         [SerializeField] private Toggle holesToggle;
         [SerializeField] private Toggle onlineToggle;
         [SerializeField] private Toggle randomTurnsToggle;
@@ -79,7 +78,6 @@ namespace Managers
         private void Start()
         {
             AdsManager.Instance.ShowInterstitialAd();
-            _photonView = GetComponent<PhotonView>();
             
             continueButtonObj.SetActive(false);
             gameOverPanelsObj.SetActive(false);
@@ -619,7 +617,6 @@ namespace Managers
                 Debug.Log("Starting the game...");
                 int playerCount = NetworkManager.Instance.PlayerCount;
                 Debug.Log($"Total Number Of Players Joined : {playerCount}");
-                NetworkManager.Instance.SendRPC("StartGameOnAllClients" , RpcTarget.All , playerCount);
                 SetupGame();
             }
             else
@@ -760,16 +757,34 @@ namespace Managers
             EventsManager.Invoke(Event.PlayerNamesUpdated , playerID , playerName);
         }
         
+        private void UpdateScoreUI()
+        {
+            for(int i = 0; i < _numberOfPlayers; i++)
+            {
+                if(coinScoreTMPTexts.Length > i)
+                {
+                    coinScoreTMPTexts[i].text = $"{_playerNamesArray[i]} : {_playerScoresArray[i]}";
+                }
+            }
+        }
+        
         #endregion
         
-        #region Photon Pun Functions
-        
-        [PunRPC]
-        private void StartGameOnAllClients(int numberOfPlayers)
+        #region Photon Observables (Synchronization)
+
+        public void OnPhotonSerializeView(PhotonStream stream , PhotonMessageInfo info)
         {
-            Debug.Log($"[RPC] StartGameOnAllClients invoked with {numberOfPlayers} players.");
-            _numberOfPlayers = numberOfPlayers;
-            SetupGame();
+            if(stream.IsWriting)
+            {
+                stream.SendNext(_playerScoresArray);
+                stream.SendNext(_playerNamesArray);
+            }
+            else
+            {
+                _playerScoresArray = (int[])stream.ReceiveNext();
+                _playerNamesArray = (string[])stream.ReceiveNext();
+                UpdateScoreUI();
+            }
         }
         
         #endregion
@@ -811,7 +826,7 @@ namespace Managers
         {
             _onlineToggleBool = onlineToggle.isOn;
             PlayerPrefsManager.SaveData(_onlineToggleBool , OnlineKey);
-            EventsManager.Invoke(Event.PlayerNowOnline , _onlineToggleBool);
+            EventsManager.Invoke(Event.PlayerOnlineStatus , _onlineToggleBool);
             
             if(_onlineToggleBool)
             {
