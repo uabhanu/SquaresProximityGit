@@ -1,11 +1,12 @@
-using System;
-using Photon.Pun;
-using Photon.Realtime;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace Managers
 {
+    using System;
+    using Photon.Pun;
+    using Photon.Realtime;
+    using System.Collections.Generic;
+    using UnityEngine;
+    using Utils;
+    
     public class NetworkManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         #region Private Variables
@@ -54,12 +55,12 @@ namespace Managers
         {
             if(!PhotonNetwork.IsConnected)
             {
-                Debug.Log("Connecting to Photon...");
+                CustomColoursLogger.LogWarning("Sir Bhanu, Connecting to Photon...");
                 PhotonNetwork.ConnectUsingSettings();
             }
             else
             {
-                Debug.Log("Already connected to Photon.");
+                CustomColoursLogger.LogInfo("Sir Bhanu, Already connected to Photon :)");
             }
         }
 
@@ -79,7 +80,7 @@ namespace Managers
         {
             if(PhotonNetwork.IsConnected)
             {
-                Debug.Log("Disconnecting from Photon...");
+                CustomColoursLogger.LogWarning("Sir Bhanu, Disconnecting from Photon...");
                 PhotonNetwork.Disconnect();
             }
         }
@@ -115,7 +116,7 @@ namespace Managers
             }
             else
             {
-                Debug.LogError("Only the MasterClient can broadcast observed data.");
+                CustomColoursLogger.LogError("Sir Bhanu, Only the MasterClient can broadcast observed data :(");
             }
         }
 
@@ -130,7 +131,7 @@ namespace Managers
             if(PhotonNetwork.IsMasterClient)
             {
                 _syncedGridCells = gridCells;
-                Debug.Log("Grid data set and ready to sync.");
+                CustomColoursLogger.LogInfo("Sir Bhanu, Grid data set and ready to sync :)");
             }
         }
         
@@ -139,7 +140,7 @@ namespace Managers
             if(PhotonNetwork.IsMasterClient)
             {
                 SyncedScore = newScore;
-                Debug.Log($"Score updated to : {SyncedScore}");
+                CustomColoursLogger.LogInfo($"Sir Bhanu, Score updated to : {SyncedScore} :)");
             }
         }
 
@@ -149,33 +150,33 @@ namespace Managers
 
         public override void OnConnectedToMaster()
         {
-            Debug.Log("Connected to Photon Master Server.");
+            CustomColoursLogger.LogInfo("Sir Bhanu, Connected to Photon Master Server :)");
             PhotonNetwork.AutomaticallySyncScene = true;
             base.OnConnectedToMaster();
         }
 
         public override void OnDisconnected(DisconnectCause cause)
         {
-            Debug.LogWarning($"Disconnected from Photon. Reason : {cause}");
+            CustomColoursLogger.LogError($"Sir Bhanu, Disconnected from Photon. Reason : {cause} :(");
             base.OnDisconnected(cause);
         }
 
         public override void OnJoinedRoom()
         {
-            Debug.Log($"Joined room : {PhotonNetwork.CurrentRoom.Name}");
+            CustomColoursLogger.LogInfo($"Sir Bhanu, Joined room : {PhotonNetwork.CurrentRoom.Name} :)");
             EventsManager.Invoke(Event.PlayerJoinedRoom);
             base.OnJoinedRoom();
         }
 
         public override void OnPlayerEnteredRoom(Player newPlayer)
         {
-            Debug.Log($"Player {newPlayer.NickName} entered the room.");
+            CustomColoursLogger.LogInfo($"Sir Bhanu, Player {newPlayer.NickName} entered the room :)");
             base.OnPlayerEnteredRoom(newPlayer);
         }
 
         public override void OnPlayerLeftRoom(Player otherPlayer)
         {
-            Debug.Log($"Player {otherPlayer.NickName} left the room.");
+            CustomColoursLogger.LogInfo($"Sir Bhanu, Player {otherPlayer.NickName} left the room :(");
             base.OnPlayerLeftRoom(otherPlayer);
         }
 
@@ -192,7 +193,7 @@ namespace Managers
             else
             {
                 _syncedGridCells = new List<Vector2Int>((Vector2Int[])stream.ReceiveNext());
-                Debug.Log("Grid data synced from MasterClient.");
+                CustomColoursLogger.LogInfo("Sir Bhanu, Grid data synced from MasterClient :)");
             }
         }
 
@@ -202,15 +203,15 @@ namespace Managers
 
         private void OnPlayerOnlineStatusUpdate(bool playerOnlineStatus)
         {
-            if (playerOnlineStatus && !PhotonNetwork.IsConnected)
+            if(playerOnlineStatus && !PhotonNetwork.IsConnected)
             {
-                Debug.Log("Connecting to Photon...");
+                CustomColoursLogger.LogWarning("Sir Bhanu, Connecting to Photon...");
                 Connect();
             }
             
             else if(!playerOnlineStatus && PhotonNetwork.IsConnected)
             {
-                Debug.Log("Disconnecting from Photon...");
+                CustomColoursLogger.LogError("Sir Bhanu, Disconnecting to Photon...");
                 Disconnect();
             }
         }
